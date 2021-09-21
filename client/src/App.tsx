@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { JWT_KEY } from './app/api';
 import { useAppDispatch } from './app/hooks';
 import { setLoading, setUser, signOut } from './features/auth/authSlice';
 import ConfirmForm from './features/auth/ConfirmForm';
@@ -12,6 +13,16 @@ function App() {
   const dispatch = useAppDispatch();
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        user
+          .getIdToken()
+          .then((token) => localStorage.setItem(JWT_KEY, token))
+          .catch((err) => {
+            console.log(err);
+            alert('Something went wrong when getting user token');
+          });
+      }
+      //not checking using here is fine because this will return null if no user
       dispatch(setUser(user));
       dispatch(setLoading(false));
     });
