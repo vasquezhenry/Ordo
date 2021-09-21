@@ -1,0 +1,50 @@
+client/.env.local
+client/node_modules
+client/npm-debug.log*
+client/.env.local
+client/.env.development.local
+client/.env.production.local
+client/.env.test.local
+client/build
+.DS_Store
+*/.DS_Store
+.vscode
+
+Api/project.lock.json
+
+Api/*.swp
+Api/*.*~
+Api/project.lock.json
+Api/.DS_Store
+Api/*.pyc
+Api/nupkg/
+
+
+# Rider
+.idea
+
+# User-specific files
+Api/*.suo
+Api/*.user
+Api/*.userosscache
+Api/*.sln.docstates
+
+# Build results
+Api/[Dd]ebug/
+Api/[Dd]ebugPublic/
+Api/[Rr]elease/
+Api/[Rr]eleases/
+Api/x64/
+Api/x86/
+Api/build/
+Api/bld/
+Api/[Bb]in/
+Api/[Oo]bj/
+Api/[Oo]ut/
+Api/msbuild.log
+Api/msbuild.err
+Api/msbuild.wrn
+
+# Visual Studio 2015
+.vs/
+client/package-lock.json
