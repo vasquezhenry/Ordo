@@ -7,12 +7,14 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Api.Data;
 
 namespace Api
 {
@@ -29,12 +31,15 @@ namespace Api
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddDbContext<AppDbContex>(opts => opts.UseNpgsql(Configuration["ConnectionStrings:DefaultConnection"]));
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Api", Version = "v1" });
             });
 
+            //Firebase authentication middleware
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
             {
                 var projectId = Configuration["Firebase:ProjectId"];

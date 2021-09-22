@@ -4,7 +4,7 @@ import axios from 'axios';
 export const JWT_KEY = 'access_token';
 
 //Base axios instance all outgoing api requests will use
-export const instance = axios.create();
+export const instance = axios.create({ baseURL: process.env.REACT_APP_API_URL });
 
 /**
  * Request interceptor for all outgoing requests

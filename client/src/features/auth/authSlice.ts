@@ -11,6 +11,7 @@ const initialState: AuthState = {
   user: null,
   loading: true,
 };
+
 const EMAIL_KEY = 'emailForSignIn';
 export const signIn = createAsyncThunk('auth/signIn', async (email: string) => {
   try {
@@ -18,7 +19,7 @@ export const signIn = createAsyncThunk('auth/signIn', async (email: string) => {
       url: 'http://localhost:3000/confirm',
       handleCodeInApp: true,
     });
-
+    //Set this email in localStorage so user doesn't have to insert it again to login
     localStorage.setItem(EMAIL_KEY, email);
   } catch (error) {
     throw error;
@@ -28,6 +29,7 @@ export const signIn = createAsyncThunk('auth/signIn', async (email: string) => {
 export const confirm = createAsyncThunk('auth/confirm', async (payload: { email: string; code: string }) => {
   try {
     const res = await signInWithEmailLink(auth, payload.email, payload.code);
+    //Remove email from localStorage after user logins
     localStorage.removeItem(EMAIL_KEY);
     return res.user;
   } catch (error) {
