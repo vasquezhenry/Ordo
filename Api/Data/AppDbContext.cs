@@ -1,3 +1,7 @@
+using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Api.Menus;
 using Api.Restaurants;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +18,33 @@ namespace Api.Data
         {
             modelBuilder.Entity<Restaurant>().HasMany(r => r.RestaurantAddresses).WithOne(a => a.Restaurant).OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<Restaurant>().HasOne(r => r.Menu).WithOne(m => m.Restaurant).HasForeignKey<Menu>(m => m.RestaurantId);
+            modelBuilder.Entity<Menu>().HasMany(m => m.Categories).WithOne(c => c.Menu).HasForeignKey(c => c.MenuId);
+        }
+
+        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var AddedEntities = ChangeTracker.Entries().Where(E => E.State == EntityState.Added).ToList();
+
+            AddedEntities.ForEach(E =>
+            {
+                if (E.Entity is BaseEntity)
+                {
+                    E.Property("CreatedDate").CurrentValue = DateTime.Now;
+                }
+            });
+
+            var EditedEntities = ChangeTracker.Entries().Where(E => E.State == EntityState.Modified).ToList();
+
+            EditedEntities.ForEach(E =>
+            {
+                if (E.Entity is BaseEntity)
+                {
+
+                    E.Property("UpdatedDate").CurrentValue = DateTime.Now;
+                }
+            });
+
+            return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         }
 
 
