@@ -27,15 +27,14 @@ namespace Api.Restaurants
             var restaurant = _mapper.Map<Restaurant>(restaurantDto);
             restaurant.OwnerId = ownerId;
             await _repository.CreateRestaurant(restaurant);
-            return CreatedAtAction(nameof(GetRestaurants), new { ownerId = restaurant.OwnerId }, restaurant);
+            return CreatedAtAction(nameof(GetRestaurants), new { ownerId = restaurant.OwnerId }, _mapper.Map<RestaurantDto>(restaurant));
         }
 
         [HttpGet("/api/owners/{ownerId}/restaurants")]
         public async Task<ActionResult<IEnumerable<RestaurantDto>>> GetRestaurants(string ownerId)
         {
             var restaurants = await _repository.GetRestaurants(ownerId);
-            var restaurantDtos = _mapper.Map<IEnumerable<Restaurant>, IEnumerable<RestaurantDto>>(restaurants);
-            return Ok(restaurantDtos);
+            return Ok(_mapper.Map<IEnumerable<Restaurant>, IEnumerable<RestaurantDto>>(restaurants));
         }
     }
 }
