@@ -24,7 +24,7 @@ namespace Api.Restaurants
         //<summary>Returns all restaurants by ownerId</summary>
         public async Task<IEnumerable<Restaurant>> GetRestaurants(string ownerId)
         {
-            return await _context.Restaurants.Include(r => r.RestaurantAddresses).Where(r => r.OwnerId == ownerId).ToListAsync();
+            return await _context.Restaurants.Include(r => r.Menu).Include(r => r.RestaurantAddresses).Where(r => r.OwnerId == ownerId).ToListAsync();
         }
 
     }

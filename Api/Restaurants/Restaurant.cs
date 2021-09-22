@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Api.Data;
+using Api.Menus;
 
 namespace Api.Restaurants
 {
@@ -9,6 +10,7 @@ namespace Api.Restaurants
         public string Type { get; set; }
         public string OwnerId { get; set; }
         public string Description { get; set; }
+        public Menu Menu { get; set; }
         public ICollection<RestaurantAddress> RestaurantAddresses { get; set; }
     }
 }

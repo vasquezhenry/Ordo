@@ -12,6 +12,7 @@ namespace Api.Restaurants
         public string Type { get; set; }
         public string OwnerId { get; set; }
         public string Description { get; set; }
+        public Guid MenuId { get; set; }
         public IEnumerable<RestaurantAddressDto> Addresses { get; set; }
     }
 }
