@@ -15,6 +15,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Api.Data;
+using Api.Mappings;
+using Api.Restaurants;
 
 namespace Api
 {
@@ -31,9 +33,12 @@ namespace Api
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddDbContext<AppDbContex>(opts => opts.UseNpgsql(Configuration["ConnectionStrings:DefaultConnection"]));
+            services.AddDbContext<AppDbContext>(opts => opts.UseNpgsql(Configuration["ConnectionStrings:DefaultConnection"]));
+            services.AddAutoMapper(typeof(AppDataMappingProfiles).Assembly);
 
-            services.AddControllers();
+            services.AddScoped<RestaurantRepository>();
+
+            services.AddControllers().AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Api", Version = "v1" });
