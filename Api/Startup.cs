@@ -45,7 +45,7 @@ namespace Api
 
             services.AddCors(options =>
             {
-                options.AddPolicy("AllowAll", builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials());
+                options.AddPolicy("AllowAll", builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             });
 
 
@@ -70,7 +70,8 @@ namespace Api
 
             app.UseRouting();
 
-            app.UseCors();
+            app.UseCors("AllowAll");
+
 
             app.UseAuthentication();
             app.UseAuthorization();
