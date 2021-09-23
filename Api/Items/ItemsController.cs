@@ -19,6 +19,9 @@ namespace Api.Items
             _mapper = mapper;
         }
 
+        ///<summary>
+        ///Creates item
+        ///</summary>
         [HttpPost("/api/categories/{categoryId}/items")]
         public async Task<ActionResult<ItemDto>> CreateItem(Guid categoryId, CreateItemDto itemDto)
         {
@@ -28,6 +31,9 @@ namespace Api.Items
             return CreatedAtAction(nameof(GetItem), new { id = item.Id }, _mapper.Map<ItemDto>(item));
         }
 
+        ///<summary>
+        ///Gets items by category id
+        ///</summary>
         [HttpGet("/api/categories/{categoryId}/items")]
         public async Task<ActionResult<IEnumerable<Item>>> GetItems(Guid categoryId)
         {
@@ -35,6 +41,9 @@ namespace Api.Items
             return Ok(_mapper.Map<IEnumerable<ItemDto>>(items));
         }
 
+        ///<summary>
+        ///Gets a specific item by id
+        ///</summary>
         [HttpGet("{id}")]
         public async Task<ActionResult<ItemDto>> GetItem(Guid id)
         {
@@ -42,6 +51,9 @@ namespace Api.Items
             return Ok(_mapper.Map<ItemDto>(item));
         }
 
+        ///<summary>
+        ///Updates item
+        ///</summary>
         [HttpPut("{id}")]
         public async Task<ActionResult<ItemDto>> UpdateItem(Guid id, UpdateItemDto itemDto)
         {

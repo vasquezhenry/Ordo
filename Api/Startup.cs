@@ -1,3 +1,4 @@
+using System.Net.Mime;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,9 @@ using Api.Mappings;
 using Api.Restaurants;
 using Api.Categories;
 using Api.Items;
+using System.IO;
+using System.Reflection;
+using Api.Extensions;
 
 namespace Api
 {
@@ -32,35 +36,24 @@ namespace Api
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
+        //TODO: Clean configure services, move all this to an extension method
         public void ConfigureServices(IServiceCollection services)
         {
 
             services.AddDbContext<AppDbContext>(opts => opts.UseNpgsql(Configuration["ConnectionStrings:DefaultConnection"]));
             services.AddAutoMapper(typeof(AppDataMappingProfiles).Assembly);
 
-            services.AddScoped<RestaurantRepository>();
-            services.AddScoped<CategoryRepository>();
-            services.AddScoped<ItemRepository>();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials());
+            });
+
 
             services.AddControllers().AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Api", Version = "v1" });
-            });
 
-            //Firebase authentication middleware
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
-            {
-                var projectId = Configuration["Firebase:ProjectId"];
-                opt.Authority = $"https://securetoken.google.com/{projectId}";
-                opt.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidIssuer = $"https://securetoken.google.com/{projectId}",
-                    ValidAudience = projectId,
-                    ValidateLifetime = true
-                };
-            });
+            services.ConfigureRepositories();
+            services.ConfigureSwagger();
+            services.ConfigureAuthentication(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,20 +62,22 @@ namespace Api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Api v1"));
             }
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "OrdoApi v1"));
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllers().RequireAuthorization();
             });
         }
     }

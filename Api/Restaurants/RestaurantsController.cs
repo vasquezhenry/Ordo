@@ -22,6 +22,9 @@ namespace Api.Restaurants
             _mapper = mapper;
         }
 
+        ///<summary>
+        ///Creates restaurant
+        ///</summary>
         [HttpPost("/api/owners/{ownerId}/restaurants")]
         public async Task<ActionResult> CreateRestaurant(string ownerId, CreateRestaurantDto restaurantDto)
         {
@@ -35,6 +38,9 @@ namespace Api.Restaurants
             return CreatedAtAction(nameof(GetRestaurants), new { ownerId = restaurant.OwnerId }, _mapper.Map<RestaurantDto>(restaurant));
         }
 
+        ///<summary>
+        ///Gets restaurants by owner id(firebase user id)
+        ///</summary>
         [HttpGet("/api/owners/{ownerId}/restaurants")]
         public async Task<ActionResult<IEnumerable<RestaurantDto>>> GetRestaurants(string ownerId)
         {
