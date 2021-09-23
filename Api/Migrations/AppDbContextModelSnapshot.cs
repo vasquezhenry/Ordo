@@ -3,23 +3,75 @@ using System;
 using Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace Api.Data.Migrations
+namespace Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210922201221_RestaurantAndRestaurantAddress")]
-    partial class RestaurantAndRestaurantAddress
+    partial class AppDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
                 .HasAnnotation("ProductVersion", "5.0.10")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+            modelBuilder.Entity("Api.Categories.Category", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("MenuId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MenuId");
+
+                    b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("Api.Menus.Menu", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("RestaurantId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RestaurantId")
+                        .IsUnique();
+
+                    b.ToTable("Menus");
+                });
 
             modelBuilder.Entity("Api.Restaurants.Restaurant", b =>
                 {
@@ -42,7 +94,7 @@ namespace Api.Data.Migrations
                     b.Property<string>("Type")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("UpdatedDate")
+                    b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
@@ -93,6 +145,28 @@ namespace Api.Data.Migrations
                     b.ToTable("RestaurantAddresses");
                 });
 
+            modelBuilder.Entity("Api.Categories.Category", b =>
+                {
+                    b.HasOne("Api.Menus.Menu", "Menu")
+                        .WithMany("Categories")
+                        .HasForeignKey("MenuId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Menu");
+                });
+
+            modelBuilder.Entity("Api.Menus.Menu", b =>
+                {
+                    b.HasOne("Api.Restaurants.Restaurant", "Restaurant")
+                        .WithOne("Menu")
+                        .HasForeignKey("Api.Menus.Menu", "RestaurantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Restaurant");
+                });
+
             modelBuilder.Entity("Api.Restaurants.RestaurantAddress", b =>
                 {
                     b.HasOne("Api.Restaurants.Restaurant", "Restaurant")
@@ -104,8 +178,15 @@ namespace Api.Data.Migrations
                     b.Navigation("Restaurant");
                 });
 
+            modelBuilder.Entity("Api.Menus.Menu", b =>
+                {
+                    b.Navigation("Categories");
+                });
+
             modelBuilder.Entity("Api.Restaurants.Restaurant", b =>
                 {
+                    b.Navigation("Menu");
+
                     b.Navigation("RestaurantAddresses");
                 });
 #pragma warning restore 612, 618

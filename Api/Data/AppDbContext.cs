@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Api.Categories;
 using Api.Menus;
 using Api.Restaurants;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,8 @@ namespace Api.Data
     public class AppDbContext : DbContext
     {
         public DbSet<Restaurant> Restaurants { get; set; }
+        public DbSet<Menu> Menus { get; set; }
+        public DbSet<Category> Categories { get; set; }
         public DbSet<RestaurantAddress> RestaurantAddresses { get; set; }
         public AppDbContext(DbContextOptions options) : base(options) { }
 

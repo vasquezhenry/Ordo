@@ -1,3 +1,4 @@
+using Api.Categories;
 using Api.RestaurantAddresses;
 using Api.Restaurants;
 using AutoMapper;
@@ -12,6 +13,9 @@ namespace Api.Mappings
             CreateMap<Restaurant, RestaurantDto>().ForMember(dest => dest.Addresses, map => map.MapFrom(source => source.RestaurantAddresses)).ReverseMap();
             CreateMap<CreateRestaurantDto, RestaurantAddressDto>().ReverseMap();
             CreateMap<RestaurantAddressDto, RestaurantAddress>().ReverseMap();
+
+            CreateMap<Category, CreateCategoryDto>().ReverseMap();
+            CreateMap<Category, CategoryDto>().ReverseMap();
         }
     }
 }

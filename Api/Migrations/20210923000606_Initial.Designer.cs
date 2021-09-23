@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace Api.Data.Migrations
+namespace Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210922223552_AddMenuTable")]
-    partial class AddMenuTable
+    [Migration("20210923000606_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,34 @@ namespace Api.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
                 .HasAnnotation("ProductVersion", "5.0.10")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+            modelBuilder.Entity("Api.Categories.Category", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("MenuId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MenuId");
+
+                    b.ToTable("Categories");
+                });
 
             modelBuilder.Entity("Api.Menus.Menu", b =>
                 {
@@ -30,10 +58,13 @@ namespace Api.Data.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
                     b.Property<Guid>("RestaurantId")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("UpdatedDate")
+                    b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
@@ -41,7 +72,7 @@ namespace Api.Data.Migrations
                     b.HasIndex("RestaurantId")
                         .IsUnique();
 
-                    b.ToTable("Menu");
+                    b.ToTable("Menus");
                 });
 
             modelBuilder.Entity("Api.Restaurants.Restaurant", b =>
@@ -65,7 +96,7 @@ namespace Api.Data.Migrations
                     b.Property<string>("Type")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("UpdatedDate")
+                    b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
@@ -116,6 +147,17 @@ namespace Api.Data.Migrations
                     b.ToTable("RestaurantAddresses");
                 });
 
+            modelBuilder.Entity("Api.Categories.Category", b =>
+                {
+                    b.HasOne("Api.Menus.Menu", "Menu")
+                        .WithMany("Categories")
+                        .HasForeignKey("MenuId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Menu");
+                });
+
             modelBuilder.Entity("Api.Menus.Menu", b =>
                 {
                     b.HasOne("Api.Restaurants.Restaurant", "Restaurant")
@@ -136,6 +178,11 @@ namespace Api.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Restaurant");
+                });
+
+            modelBuilder.Entity("Api.Menus.Menu", b =>
+                {
+                    b.Navigation("Categories");
                 });
 
             modelBuilder.Entity("Api.Restaurants.Restaurant", b =>
