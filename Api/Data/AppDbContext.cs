@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Api.Categories;
+using Api.Items;
 using Api.Menus;
 using Api.Restaurants;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,7 @@ namespace Api.Data
         public DbSet<Restaurant> Restaurants { get; set; }
         public DbSet<Menu> Menus { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Item> Items { get; set; }
         public DbSet<RestaurantAddress> RestaurantAddresses { get; set; }
         public AppDbContext(DbContextOptions options) : base(options) { }
 
@@ -22,6 +24,8 @@ namespace Api.Data
             modelBuilder.Entity<Restaurant>().HasMany(r => r.RestaurantAddresses).WithOne(a => a.Restaurant).OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<Restaurant>().HasOne(r => r.Menu).WithOne(m => m.Restaurant).HasForeignKey<Menu>(m => m.RestaurantId);
             modelBuilder.Entity<Menu>().HasMany(m => m.Categories).WithOne(c => c.Menu).HasForeignKey(c => c.MenuId);
+            modelBuilder.Entity<Category>().HasMany(c => c.Items).WithOne(i => i.Category).HasForeignKey(i => i.CategoryId);
+            modelBuilder.Entity<Item>().Property(i => i.Active).HasDefaultValue(true);
         }
 
         public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))

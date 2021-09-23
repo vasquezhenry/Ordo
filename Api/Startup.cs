@@ -18,6 +18,7 @@ using Api.Data;
 using Api.Mappings;
 using Api.Restaurants;
 using Api.Categories;
+using Api.Items;
 
 namespace Api
 {
@@ -39,6 +40,7 @@ namespace Api
 
             services.AddScoped<RestaurantRepository>();
             services.AddScoped<CategoryRepository>();
+            services.AddScoped<ItemRepository>();
 
             services.AddControllers().AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddSwaggerGen(c =>
