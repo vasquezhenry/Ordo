@@ -41,5 +41,12 @@ namespace Api.Items
         {
             return await _context.Items.Where(i => i.Id == id).SingleOrDefaultAsync();
         }
+
+        public async Task DeleteItem(Guid id)
+        {
+            var item = await _context.Items.FirstOrDefaultAsync(i => i.Id == id);
+            _context.Items.Remove(item);
+            await _context.SaveChangesAsync();
+        }
     }
 }

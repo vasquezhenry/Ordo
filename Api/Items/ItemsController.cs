@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Api.Items
 {
     [ApiController]
-    [Route("/api/items")]
+    [Route("/items")]
     public class ItemsController : ControllerBase
     {
         private readonly IMapper _mapper;
@@ -22,7 +22,7 @@ namespace Api.Items
         ///<summary>
         ///Creates item
         ///</summary>
-        [HttpPost("/api/categories/{categoryId}/items")]
+        [HttpPost("/categories/{categoryId}/items")]
         public async Task<ActionResult<ItemDto>> CreateItem(Guid categoryId, CreateItemDto itemDto)
         {
             var item = _mapper.Map<Item>(itemDto);
@@ -34,7 +34,7 @@ namespace Api.Items
         ///<summary>
         ///Gets items by category id
         ///</summary>
-        [HttpGet("/api/categories/{categoryId}/items")]
+        [HttpGet("/categories/{categoryId}/items")]
         public async Task<ActionResult<IEnumerable<Item>>> GetItems(Guid categoryId)
         {
             var items = await _repository.GetItems(categoryId);
@@ -59,6 +59,16 @@ namespace Api.Items
         {
             var item = _mapper.Map<Item>(itemDto);
             await _repository.UpdateItem(id, item);
+            return NoContent();
+        }
+
+        ///<summary>
+        ///Delete item
+        ///</summary>
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteItem(Guid id)
+        {
+            await _repository.DeleteItem(id);
             return NoContent();
         }
 

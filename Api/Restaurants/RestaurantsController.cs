@@ -9,7 +9,7 @@ namespace Api.Restaurants
 {
     // [Authorize]
     [ApiController]
-    [Route("/api/restaurants")]
+    [Route("/restaurants")]
     public class RestaurantsController : ControllerBase
     {
 
@@ -25,7 +25,7 @@ namespace Api.Restaurants
         ///<summary>
         ///Creates restaurant
         ///</summary>
-        [HttpPost("/api/owners/{ownerId}/restaurants")]
+        [HttpPost("/owners/{ownerId}/restaurants")]
         public async Task<ActionResult> CreateRestaurant(string ownerId, CreateRestaurantDto restaurantDto)
         {
             var restaurant = _mapper.Map<Restaurant>(restaurantDto);
@@ -41,7 +41,7 @@ namespace Api.Restaurants
         ///<summary>
         ///Gets restaurants by owner id(firebase user id)
         ///</summary>
-        [HttpGet("/api/owners/{ownerId}/restaurants")]
+        [HttpGet("/owners/{ownerId}/restaurants")]
         public async Task<ActionResult<IEnumerable<RestaurantDto>>> GetRestaurants(string ownerId)
         {
             var restaurants = await _repository.GetRestaurants(ownerId);

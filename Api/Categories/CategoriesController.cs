@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Api.Categories
 {
     [ApiController]
-    [Route("/api/categories")]
+    [Route("/categories")]
     public class CategoriesController : ControllerBase
     {
         private readonly IMapper _mapper;
@@ -23,7 +23,7 @@ namespace Api.Categories
         ///<summary>
         ///Creates category
         ///</summary>
-        [HttpPost("/api/menus/{menuId}/categories")]
+        [HttpPost("/menus/{menuId}/categories")]
         public async Task<ActionResult> CreateCategory(Guid menuId, CreateCategoryDto categoryDto)
         {
             var category = _mapper.Map<Category>(categoryDto);
@@ -35,7 +35,7 @@ namespace Api.Categories
         ///<summary>
         ///Gets categories by menu id
         ///</summary>
-        [HttpGet("/api/menus/{menuId}/categories")]
+        [HttpGet("/menus/{menuId}/categories")]
         public async Task<ActionResult<IEnumerable<CategoryDto>>> GetCategories(Guid menuId)
         {
             var categories = await _repository.GetCategories(menuId);
