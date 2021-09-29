@@ -1,5 +1,6 @@
 using Api.Categories;
 using Api.Items;
+using Api.Menus;
 using Api.RestaurantAddresses;
 using Api.Restaurants;
 using AutoMapper;
@@ -17,6 +18,8 @@ namespace Api.Mappings
 
             CreateMap<Category, CreateCategoryDto>().ReverseMap();
             CreateMap<Category, CategoryDto>().ReverseMap();
+
+            CreateMap<Menu, MenuDto>();
 
             CreateMap<Item, ItemDto>().ReverseMap();
             CreateMap<Item, CreateItemDto>().ReverseMap();
