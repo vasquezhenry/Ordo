@@ -6,6 +6,7 @@ namespace Api.Menus
 {
     public class MenuDto
     {
+        public Guid Id { get; set; }
         public string Description { get; set; }
         public Guid RestaurantId { get; set; }
 
