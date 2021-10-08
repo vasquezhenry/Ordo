@@ -5,6 +5,7 @@ import { useAppDispatch } from './app/hooks';
 import { setLoading, setUser, signOut } from './features/auth/authSlice';
 import ConfirmForm from './features/auth/ConfirmForm';
 import LoginForm from './features/auth/LoginForm';
+import UserPage from './features/user_page';
 import GuestRoute from './routes/GuestRoute';
 import PrivateRoute from './routes/PrivateRoute';
 import { auth } from './services/firebase';
@@ -34,13 +35,7 @@ function App() {
     <Router>
       <Switch>
         <PrivateRoute exact path="/">
-          <button
-            onClick={() => {
-              dispatch(signOut()).unwrap();
-            }}
-          >
-            SignOut!
-          </button>
+          <UserPage/>
         </PrivateRoute>
         <GuestRoute path="/login">
           <LoginForm />
