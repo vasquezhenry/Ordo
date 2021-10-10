@@ -11,9 +11,9 @@ namespace Api.Items
     public class ItemsController : ControllerBase
     {
         private readonly IMapper _mapper;
-        private readonly ItemRepository _itemRepository;
+        private readonly IItemRepository _itemRepository;
 
-        public ItemsController(ItemRepository repository, IMapper mapper)
+        public ItemsController(IItemRepository repository, IMapper mapper)
         {
             _itemRepository = repository;
             _mapper = mapper;

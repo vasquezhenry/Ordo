@@ -11,9 +11,9 @@ namespace Api.Categories
     public class CategoriesController : ControllerBase
     {
         private readonly IMapper _mapper;
-        private readonly CategoryRepository _categoryRepository;
+        private readonly ICategoryRepository _categoryRepository;
 
-        public CategoriesController(CategoryRepository repository, IMapper mapper)
+        public CategoriesController(ICategoryRepository repository, IMapper mapper)
         {
             _categoryRepository = repository;
             _mapper = mapper;

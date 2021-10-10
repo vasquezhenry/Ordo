@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.Menus
 {
-    public class MenuRepository : RepositoryBase<Menu, AppDbContext>
+    public class MenuRepository : RepositoryBase<Menu, AppDbContext>, IMenuRepository
     {
 
         public MenuRepository(AppDbContext context) : base(context)

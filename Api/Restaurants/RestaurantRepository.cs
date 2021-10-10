@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.Restaurants
 {
-    public class RestaurantRepository : RepositoryBase<Restaurant, AppDbContext>
+    public class RestaurantRepository : RepositoryBase<Restaurant, AppDbContext>, IRestaurantRepository
     {
 
         public RestaurantRepository(AppDbContext context) : base(context)

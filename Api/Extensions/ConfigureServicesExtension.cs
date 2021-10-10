@@ -3,6 +3,7 @@ using System.IO;
 using System.Reflection;
 using Api.Categories;
 using Api.Items;
+using Api.Menus;
 using Api.Restaurants;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
@@ -34,9 +35,10 @@ namespace Api.Extensions
         }
         public static IServiceCollection ConfigureRepositories(this IServiceCollection services)
         {
-            services.AddScoped<RestaurantRepository>();
-            services.AddScoped<CategoryRepository>();
-            services.AddScoped<ItemRepository>();
+            services.AddScoped<IRestaurantRepository, RestaurantRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IItemRepository, ItemRepository>();
+            services.AddScoped<IMenuRepository, MenuRepository>();
 
             return services;
         }

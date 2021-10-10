@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.Items
 {
-    public class ItemRepository : RepositoryBase<Item, AppDbContext>
+    public class ItemRepository : RepositoryBase<Item, AppDbContext>, IItemRepository
     {
 
         public ItemRepository(AppDbContext context) : base(context)

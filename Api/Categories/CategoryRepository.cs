@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.Categories
 {
-    public class CategoryRepository : RepositoryBase<Category, AppDbContext>
+    public class CategoryRepository : RepositoryBase<Category, AppDbContext>, ICategoryRepository
     {
         public CategoryRepository(AppDbContext context) : base(context)
         {

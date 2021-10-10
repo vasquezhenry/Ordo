@@ -13,10 +13,10 @@ namespace Api.Restaurants
     public class RestaurantsController : ControllerBase
     {
 
-        private readonly RestaurantRepository _restaurantRepository;
+        private readonly IRestaurantRepository _restaurantRepository;
         private readonly IMapper _mapper;
 
-        public RestaurantsController(RestaurantRepository repository, IMapper mapper)
+        public RestaurantsController(IRestaurantRepository repository, IMapper mapper)
         {
             _restaurantRepository = repository;
             _mapper = mapper;

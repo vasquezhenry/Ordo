@@ -10,9 +10,9 @@ namespace Api.Menus
     public class MenusController : ControllerBase
     {
         private readonly IMapper _mapper;
-        private readonly MenuRepository _menuRepository;
+        private readonly IMenuRepository _menuRepository;
 
-        public MenusController(IMapper mapper, MenuRepository repository)
+        public MenusController(IMapper mapper, IMenuRepository repository)
         {
             _mapper = mapper;
             _menuRepository = repository;
