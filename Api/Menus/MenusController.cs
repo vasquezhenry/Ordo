@@ -18,6 +18,9 @@ namespace Api.Menus
             _menuRepository = repository;
         }
 
+        ///<summary>
+        ///Get menus by restaurant ID
+        ///</summary>
         [HttpGet("restaurants/{restaurantId}/menus")]
         public async Task<ActionResult<IEnumerable<MenuDto>>> GetMenus(Guid restaurantId)
         {

@@ -22,7 +22,7 @@ namespace Api.Items
         ///<summary>
         ///Creates item
         ///</summary>
-        [HttpPost("/categories/{categoryId}/items")]
+        [HttpPost("categories/{categoryId}/items")]
         public async Task<ActionResult<ItemDto>> CreateItem(Guid categoryId, CreateItemDto itemDto)
         {
             var item = _mapper.Map<Item>(itemDto);
@@ -34,8 +34,8 @@ namespace Api.Items
         ///<summary>
         ///Gets items by category id
         ///</summary>
-        [HttpGet("/categories/{categoryId}/items")]
-        public async Task<ActionResult<IEnumerable<Item>>> GetItems(Guid categoryId)
+        [HttpGet("categories/{categoryId}/items")]
+        public async Task<ActionResult<IEnumerable<ItemDto>>> GetItems(Guid categoryId)
         {
             var items = await _itemRepository.GetByCategoryId(categoryId);
             return Ok(_mapper.Map<IEnumerable<ItemDto>>(items));
@@ -48,6 +48,10 @@ namespace Api.Items
         public async Task<ActionResult<ItemDto>> GetItem(Guid id)
         {
             var item = await _itemRepository.Get(id);
+            if (item == null)
+            {
+                return BadRequest("Item does not exist");
+            }
             return Ok(_mapper.Map<ItemDto>(item));
         }
 
@@ -57,8 +61,19 @@ namespace Api.Items
         [HttpPut("{id}")]
         public async Task<ActionResult<ItemDto>> UpdateItem(Guid id, UpdateItemDto itemDto)
         {
-            var item = _mapper.Map<Item>(itemDto);
-            await _itemRepository.Update(item);
+            var i = await _itemRepository.Get(id);
+
+            if (i == null)
+            {
+                return BadRequest("Item does not exist.");
+            }
+
+            i.Active = itemDto.Active;
+            i.Description = itemDto.Description;
+            i.Name = itemDto.Name;
+            i.Price = itemDto.Price;
+            i.CategoryId = itemDto.CategoryId;
+            await _itemRepository.Update(i);
             return NoContent();
         }
 

@@ -1,9 +1,0 @@
-{
-  "Firebase": {
-    "ProjectName": "Ordo",
-    "ProjectId": "ordo-84b03"
-  },
-  "ConnectionStrings": {
-    "DefaultConnection": "Data Source=ordo.db"
-  }
-}

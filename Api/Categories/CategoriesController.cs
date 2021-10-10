@@ -23,7 +23,7 @@ namespace Api.Categories
         ///<summary>
         ///Creates category
         ///</summary>
-        [HttpPost("/menus/{menuId}/categories")]
+        [HttpPost("menus/{menuId}/categories")]
         public async Task<ActionResult> CreateCategory(Guid menuId, CreateCategoryDto categoryDto)
         {
             var category = _mapper.Map<Category>(categoryDto);
@@ -35,7 +35,7 @@ namespace Api.Categories
         ///<summary>
         ///Gets categories by menu id
         ///</summary>
-        [HttpGet("/menus/{menuId}/categories")]
+        [HttpGet("menus/{menuId}/categories")]
         public async Task<ActionResult<IEnumerable<CategoryDto>>> GetCategories(Guid menuId)
         {
             var categories = await _categoryRepository.GetByMenuId(menuId);
@@ -49,6 +49,10 @@ namespace Api.Categories
         public async Task<ActionResult<CategoryDto>> GetCategory(Guid id)
         {
             var category = await _categoryRepository.Get(id);
+            if (category == null)
+            {
+                return BadRequest("Category does not exists");
+            }
             return Ok(_mapper.Map<CategoryDto>(category));
         }
     }
