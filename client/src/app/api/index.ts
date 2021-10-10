@@ -37,7 +37,7 @@ const Restaurants = {
     return instance.post(`/owners/${ownerId}/restaurants`, r);
   },
   //All the restaurants given a ownerId
-  async getRestaurants(ownerId: string): Promise<AxiosResponse<Restaurant>> {
+  async getRestaurants(ownerId: string): Promise<AxiosResponse<Restaurant[]>> {
     return instance.get(`/owners/${ownerId}/restaurants`);
   },
 };

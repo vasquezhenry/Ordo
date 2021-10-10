@@ -10,7 +10,6 @@ export interface RestaurantAddressDto {
   phoneNumber: string;
 }
 export interface CreateRestaurantDto {
-  id: string;
   name: string;
   ownerId: string;
   description?: string;
@@ -28,14 +27,12 @@ export interface Restaurant {
 }
 
 export interface Menu {
-  id: string;
   description: string;
   restaurantId: string;
   categories: Category[];
 }
 
 export interface Category {
-  id: string;
   name: string;
   description: string;
   menuId: string;

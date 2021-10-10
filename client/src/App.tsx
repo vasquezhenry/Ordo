@@ -1,10 +1,15 @@
 import { useEffect } from 'react';
+import { Toaster } from 'react-hot-toast';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { JWT_KEY } from './app/api';
 import { useAppDispatch } from './app/hooks';
 import { setLoading, setUser, signOut } from './features/auth/authSlice';
 import ConfirmForm from './features/auth/ConfirmForm';
 import LoginForm from './features/auth/LoginForm';
+import MyRestaurantPage from './features/restaurant';
+import Restaurant from './features/restaurant';
+import NewRestaurant from './features/restaurant/NewRestaurant';
+import OwnerLayout from './layouts/owner-layout';
 import GuestRoute from './routes/GuestRoute';
 import PrivateRoute from './routes/PrivateRoute';
 import { auth } from './services/firebase';
@@ -31,28 +36,27 @@ function App() {
   }, []);
 
   return (
-    <Router>
-      <Switch>
-        <PrivateRoute exact path="/">
-          <button
-            onClick={() => {
-              dispatch(signOut()).unwrap();
-            }}
-          >
-            SignOut!
-          </button>
-        </PrivateRoute>
-        <GuestRoute path="/login">
-          <LoginForm />
-        </GuestRoute>
-        <GuestRoute path="/confirm">
-          <ConfirmForm />
-        </GuestRoute>
-        <Route>
-          <h1>404 page not found!</h1>
-        </Route>
-      </Switch>
-    </Router>
+    <>
+      <Router>
+        <Switch>
+          <PrivateRoute exact path="/">
+            <OwnerLayout>
+              <MyRestaurantPage />
+            </OwnerLayout>
+          </PrivateRoute>
+          <GuestRoute path="/login">
+            <LoginForm />
+          </GuestRoute>
+          <GuestRoute path="/confirm">
+            <ConfirmForm />
+          </GuestRoute>
+          <Route>
+            <h1>404 page not found!</h1>
+          </Route>
+        </Switch>
+      </Router>
+      <Toaster />
+    </>
   );
 }
 

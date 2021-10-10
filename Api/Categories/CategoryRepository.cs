@@ -31,5 +31,10 @@ namespace Api.Categories
         {
             return await _context.Categories.Where(c => c.Id == id).SingleOrDefaultAsync();
         }
+
+        public async Task UpdateCategory(Guid categoryId, UpdateCategoryDto categoryDto)
+        {
+
+        }
     }
 }
