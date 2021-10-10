@@ -11,11 +11,11 @@ namespace Api.Items
     public class ItemsController : ControllerBase
     {
         private readonly IMapper _mapper;
-        private readonly ItemRepository _repository;
+        private readonly ItemRepository _itemRepository;
 
         public ItemsController(ItemRepository repository, IMapper mapper)
         {
-            _repository = repository;
+            _itemRepository = repository;
             _mapper = mapper;
         }
 
@@ -27,7 +27,7 @@ namespace Api.Items
         {
             var item = _mapper.Map<Item>(itemDto);
             item.CategoryId = categoryId;
-            await _repository.CreateItem(item);
+            await _itemRepository.Create(item);
             return CreatedAtAction(nameof(GetItem), new { id = item.Id }, _mapper.Map<ItemDto>(item));
         }
 
@@ -37,7 +37,7 @@ namespace Api.Items
         [HttpGet("/categories/{categoryId}/items")]
         public async Task<ActionResult<IEnumerable<Item>>> GetItems(Guid categoryId)
         {
-            var items = await _repository.GetItems(categoryId);
+            var items = await _itemRepository.GetByCategoryId(categoryId);
             return Ok(_mapper.Map<IEnumerable<ItemDto>>(items));
         }
 
@@ -47,7 +47,7 @@ namespace Api.Items
         [HttpGet("{id}")]
         public async Task<ActionResult<ItemDto>> GetItem(Guid id)
         {
-            var item = await _repository.GetItem(id);
+            var item = await _itemRepository.Get(id);
             return Ok(_mapper.Map<ItemDto>(item));
         }
 
@@ -58,7 +58,7 @@ namespace Api.Items
         public async Task<ActionResult<ItemDto>> UpdateItem(Guid id, UpdateItemDto itemDto)
         {
             var item = _mapper.Map<Item>(itemDto);
-            await _repository.UpdateItem(id, item);
+            await _itemRepository.Update(item);
             return NoContent();
         }
 
@@ -68,7 +68,7 @@ namespace Api.Items
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteItem(Guid id)
         {
-            await _repository.DeleteItem(id);
+            await _itemRepository.Delete(id);
             return NoContent();
         }
 

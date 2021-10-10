@@ -13,8 +13,6 @@ namespace Api.Restaurants
         [Required]
         public string Description { get; set; }
         [Required]
-        public string ownerId { get; set; }
-        [Required]
         public IEnumerable<RestaurantAddressDto> Addresses { get; set; }
 
     }

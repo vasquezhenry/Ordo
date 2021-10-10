@@ -13,12 +13,12 @@ namespace Api.Restaurants
     public class RestaurantsController : ControllerBase
     {
 
-        private readonly RestaurantRepository _repository;
+        private readonly RestaurantRepository _restaurantRepository;
         private readonly IMapper _mapper;
 
         public RestaurantsController(RestaurantRepository repository, IMapper mapper)
         {
-            _repository = repository;
+            _restaurantRepository = repository;
             _mapper = mapper;
         }
 
@@ -34,7 +34,7 @@ namespace Api.Restaurants
             {
                 Restaurant = restaurant
             };
-            await _repository.CreateRestaurant(restaurant);
+            await _restaurantRepository.Create(restaurant);
             return CreatedAtAction(nameof(GetRestaurants), new { ownerId = restaurant.OwnerId }, _mapper.Map<RestaurantDto>(restaurant));
         }
 
@@ -44,7 +44,7 @@ namespace Api.Restaurants
         [HttpGet("/owners/{ownerId}/restaurants")]
         public async Task<ActionResult<IEnumerable<RestaurantDto>>> GetRestaurants(string ownerId)
         {
-            var restaurants = await _repository.GetRestaurants(ownerId);
+            var restaurants = await _restaurantRepository.GetByOwnerId(ownerId);
             return Ok(_mapper.Map<IEnumerable<Restaurant>, IEnumerable<RestaurantDto>>(restaurants));
         }
     }

@@ -10,18 +10,18 @@ namespace Api.Menus
     public class MenusController : ControllerBase
     {
         private readonly IMapper _mapper;
-        private readonly MenuRepository _repository;
+        private readonly MenuRepository _menuRepository;
 
         public MenusController(IMapper mapper, MenuRepository repository)
         {
             _mapper = mapper;
-            _repository = repository;
+            _menuRepository = repository;
         }
 
         [HttpGet("restaurants/{restaurantId}/menus")]
         public async Task<ActionResult<IEnumerable<MenuDto>>> GetMenus(Guid restaurantId)
         {
-            var menus = await _repository.GetMenus(restaurantId);
+            var menus = await _menuRepository.GetByRestaurantId(restaurantId);
             return Ok(_mapper.Map<IEnumerable<MenuDto>>(menus));
         }
     }

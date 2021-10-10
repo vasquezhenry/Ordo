@@ -6,23 +6,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.Restaurants
 {
-    public class RestaurantRepository
+    public class RestaurantRepository : RepositoryBase<Restaurant, AppDbContext>
     {
-        private AppDbContext _context;
 
-        public RestaurantRepository(AppDbContext context)
+        public RestaurantRepository(AppDbContext context) : base(context)
         {
-            _context = context;
-        }
-
-        public async Task CreateRestaurant(Restaurant r)
-        {
-            _context.Restaurants.Add(r);
-            await _context.SaveChangesAsync();
         }
 
         //<summary>Returns all restaurants by ownerId</summary>
-        public async Task<IEnumerable<Restaurant>> GetRestaurants(string ownerId)
+        public async Task<IEnumerable<Restaurant>> GetByOwnerId(string ownerId)
         {
             return await _context.Restaurants.Include(r => r.Menu).Include(r => r.RestaurantAddresses).Where(r => r.OwnerId == ownerId).ToListAsync();
         }

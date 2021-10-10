@@ -7,16 +7,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.Menus
 {
-    public class MenuRepository
+    public class MenuRepository : RepositoryBase<Menu, AppDbContext>
     {
-        private readonly AppDbContext _context;
 
-        public MenuRepository(AppDbContext context)
+        public MenuRepository(AppDbContext context) : base(context)
         {
-            _context = context;
         }
 
-        public async Task<IEnumerable<Menu>> GetMenus(Guid restaurantId)
+        public async Task<IEnumerable<Menu>> GetByRestaurantId(Guid restaurantId)
         {
             return await _context.Menus.Include(m => m.Categories).Where(m => m.RestaurantId == restaurantId).ToListAsync();
         }
