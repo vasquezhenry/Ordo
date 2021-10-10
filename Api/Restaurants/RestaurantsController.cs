@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Api.Menus;
@@ -46,6 +47,23 @@ namespace Api.Restaurants
         {
             var restaurants = await _restaurantRepository.GetByOwnerId(ownerId);
             return Ok(_mapper.Map<IEnumerable<Restaurant>, IEnumerable<RestaurantDto>>(restaurants));
+        }
+
+        /// <summary>Update restaurant by id</summary>
+        [HttpPut("{id}")]
+        public async Task<ActionResult<RestaurantDto>> UpdateRestaurant(Guid id, UpdateRestaurantDto restaurantDto)
+        {
+            var restaurant = await _restaurantRepository.Get(id);
+            if (restaurant == null)
+            {
+                return BadRequest("Restaurant does not exists");
+            }
+            restaurant.Name = restaurantDto.Name;
+            restaurant.Type = restaurantDto.Type;
+            restaurant.Description = restaurantDto.Description;
+            restaurant.RestaurantAddresses = _mapper.Map<ICollection<RestaurantAddress>>(restaurantDto.Addresses);
+            await _restaurantRepository.Update(restaurant);
+            return Ok(_mapper.Map<RestaurantDto>(restaurant));
         }
     }
 }
