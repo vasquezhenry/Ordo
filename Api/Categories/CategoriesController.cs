@@ -55,5 +55,30 @@ namespace Api.Categories
             }
             return Ok(_mapper.Map<CategoryDto>(category));
         }
+
+        ///<summary>
+        ///Update category by id
+        ///</summary>
+        [HttpPut("{id}")]
+        public async Task<ActionResult<CategoryDto>> UpdateCategory(Guid id, UpdateCategoryDto categoryDto)
+        {
+            var cat = await _categoryRepository.Get(id);
+            if (cat == null)
+            {
+                return BadRequest("Category does not exists");
+            }
+            cat.Name = categoryDto.Name;
+            cat.Description = categoryDto.Description;
+            await _categoryRepository.Update(cat);
+            return Ok(_mapper.Map<CategoryDto>(cat));
+        }
+
+        /// <summary>Delete category by id</summary>
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteCategory(Guid id)
+        {
+            await _categoryRepository.Delete(id);
+            return NoContent();
+        }
     }
 }
