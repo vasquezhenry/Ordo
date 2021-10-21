@@ -24,6 +24,8 @@ using System.IO;
 using System.Reflection;
 using Api.Extensions;
 using Microsoft.AspNetCore.HttpOverrides;
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
 
 namespace Api
 {
@@ -55,6 +57,11 @@ namespace Api
             services.ConfigureRepositories();
             services.ConfigureSwagger();
             services.ConfigureAuthentication(Configuration);
+
+            FirebaseApp.Create(new AppOptions()
+            {
+                Credential = GoogleCredential.FromFile("ordo-84b03-firebase-adminsdk-i4zwl-925c4dbb5c.json")
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

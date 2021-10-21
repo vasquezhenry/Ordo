@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using Api.Items;
 
 namespace Api.Categories
 {
@@ -8,6 +10,8 @@ namespace Api.Categories
         public string Name { get; set; }
         public string Description { get; set; }
         public Guid MenuId { get; set; }
+
+        public IEnumerable<ItemDto> Items { get; set; }
 
     }
 }

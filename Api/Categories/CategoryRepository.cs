@@ -16,7 +16,7 @@ namespace Api.Categories
 
         public async Task<IEnumerable<Category>> GetByMenuId(Guid menuId)
         {
-            return await _context.Categories.Where(c => c.MenuId == menuId).ToListAsync();
+            return await _context.Categories.Include(c => c.Items).Where(c => c.MenuId == menuId).ToListAsync();
         }
     }
 }
