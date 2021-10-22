@@ -18,7 +18,7 @@ function ConfirmForm() {
     if (email) {
       dispatch(confirm({ email: email, code: window.location.href })).then(() => history.push('/'));
     }
-  }, []);
+  });
 
   const onSubmit = async (data: Input) => {
     try {

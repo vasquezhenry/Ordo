@@ -1,4 +1,5 @@
 client/.env.local
+client/.env
 client/node_modules
 client/npm-debug.log*
 client/.env.local
@@ -9,6 +10,7 @@ client/build
 .DS_Store
 */.DS_Store
 .vscode
+client/yarn.lock
 
 Api/project.lock.json
 

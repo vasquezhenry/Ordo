@@ -1,13 +1,14 @@
 import { Button, Grid, TextField } from '@mui/material';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { useHistory } from 'react-router';
 import { API } from '../../app/api';
 import { useAppSelector } from '../../app/hooks';
 import { RestaurantAddressDto } from '../../app/types';
 
-interface Props {}
+interface Props {
+  onSubmit: () => void;
+  getRestaurants: () => void
+}
 interface Input {
   type: string;
   description: string;
@@ -23,6 +24,7 @@ export default function NewRestaurant(props: Props) {
     try {
       await API.Restaurants.createRestaurant(user!.uid, { ...data, addresses: [data.addresses], ownerId: user!.uid });
       toast('Restaurant Created!');
+      props.getRestaurants();
     } catch (error) {
       console.log(error);
       return toast('Something went wrong');
@@ -79,7 +81,7 @@ export default function NewRestaurant(props: Props) {
             <TextField {...register('addresses.phoneNumber')} label="Phone Number" fullWidth />
           </Grid>
           <Grid item xs={12} style={{ marginTop: '20px' }}>
-            <Button type="submit" fullWidth variant={'contained'}>
+            <Button type="submit" fullWidth variant={'contained'} onClick={props.onSubmit}>
               Submit
             </Button>
           </Grid>
