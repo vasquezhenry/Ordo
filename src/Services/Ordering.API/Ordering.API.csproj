@@ -19,15 +19,13 @@
     <None Remove="AutoMapper.Extensions.Microsoft.DependencyInjection" />
     <None Remove="Microsoft.AspNetCore.Mvc.NewtonsoftJson" />
     <None Remove="Infrastructure\" />
-    <None Remove="Controllers\" />
     <None Remove="Mappers\" />
-    <None Remove="Models\" />
     <None Remove="MongoDB.Driver" />
+    <None Remove="Orders\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
-    <Folder Include="Controllers\" />
     <Folder Include="Mappers\" />
-    <Folder Include="Models\" />
+    <Folder Include="Orders\" />
   </ItemGroup>
 </Project>

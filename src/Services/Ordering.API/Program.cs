@@ -2,12 +2,12 @@
 using Microsoft.OpenApi.Models;
 using Ordo.Services.Ordering.API.Data;
 using Ordo.Services.Ordering.API.Mappers;
+using Ordo.Services.Ordering.API.Orders;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.Configure<DatabaseSettings>(builder.Configuration.GetSection(nameof(DatabaseSettings)));
-builder.Services.AddSingleton<IDatabaseSettings>(x => x.GetRequiredService<IOptions<DatabaseSettings>>().Value);
+builder.Services.AddScoped<OrderService>();
 builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen(c =>
