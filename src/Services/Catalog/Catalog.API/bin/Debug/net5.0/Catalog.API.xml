@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Catalog.API</name>
+    </assembly>
+    <members>
+        <member name="M:Ordo.Services.Catalog.API.Categories.CategoriesController.CreateCategory(System.Guid,Ordo.Services.Catalog.API.Categories.CreateCategoryDto)">
+            <summary>
+            Creates category
+            </summary>
+        </member>
+        <member name="M:Ordo.Services.Catalog.API.Categories.CategoriesController.GetCategories(System.Guid)">
+            <summary>
+            Gets categories by menu id
+            </summary>
+        </member>
+        <member name="M:Ordo.Services.Catalog.API.Categories.CategoriesController.GetCategory(System.Guid)">
+            <summary>
+            Gets category by id
+            </summary>
+        </member>
+        <member name="M:Ordo.Services.Catalog.API.Categories.CategoriesController.UpdateCategory(System.Guid,Ordo.Services.Catalog.API.Categories.UpdateCategoryDto)">
+            <summary>
+            Update category by id
+            </summary>
+        </member>
+        <member name="M:Ordo.Services.Catalog.API.Categories.CategoriesController.DeleteCategory(System.Guid)">
+            <summary>Delete category by id</summary>
+        </member>
+        <member name="M:Ordo.Services.Catalog.API.Items.ItemsController.CreateItem(System.Guid,Ordo.Services.Catalog.API.Items.CreateItemDto)">
+            <summary>
+            Creates item
+            </summary>
+        </member>
+        <member name="M:Ordo.Services.Catalog.API.Items.ItemsController.GetItems(System.Guid)">
+            <summary>
+            Gets items by category id
+            </summary>
+        </member>
+        <member name="M:Ordo.Services.Catalog.API.Items.ItemsController.GetItem(System.Guid)">
+            <summary>
+            Gets a specific item by id
+            </summary>
+        </member>
+        <member name="M:Ordo.Services.Catalog.API.Items.ItemsController.UpdateItem(System.Guid,Ordo.Services.Catalog.API.Items.UpdateItemDto)">
+            <summary>
+            Updates item
+            </summary>
+        </member>
+        <member name="M:Ordo.Services.Catalog.API.Items.ItemsController.DeleteItem(System.Guid)">
+            <summary>
+            Delete item
+            </summary>
+        </member>
+        <member name="M:Ordo.Services.Catalog.API.Menus.MenusController.GetMenus(System.Guid)">
+            <summary>
+            Get menus by restaurant ID
+            </summary>
+        </member>
+        <member name="M:Ordo.Services.Catalog.API.Restaurants.RestaurantsController.CreateRestaurant(System.String,Ordo.Services.Catalog.API.Restaurants.CreateRestaurantDto)">
+            <summary>
+            Creates restaurant
+            </summary>
+        </member>
+        <member name="M:Ordo.Services.Catalog.API.Restaurants.RestaurantsController.GetRestaurants(System.String)">
+            <summary>
+            Gets restaurants by owner id(firebase user id)
+            </summary>
+        </member>
+        <member name="M:Ordo.Services.Catalog.API.Restaurants.RestaurantsController.UpdateRestaurant(System.Guid,Ordo.Services.Catalog.API.Restaurants.UpdateRestaurantDto)">
+            <summary>Update restaurant by id</summary>
+        </member>
+    </members>
+</doc>
