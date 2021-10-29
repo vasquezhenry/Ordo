@@ -37,6 +37,7 @@ export interface Category {
   name: string;
   description: string;
   menuId: string;
+  items: Item[]
 }
 
 export interface CreateCategoryDto {

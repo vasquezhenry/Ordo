@@ -11,6 +11,7 @@ import OwnerLayout from './layouts/owner-layout';
 import GuestRoute from './routes/GuestRoute';
 import PrivateRoute from './routes/PrivateRoute';
 import { auth } from './services/firebase';
+import React from 'react';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -31,7 +32,7 @@ function App() {
     });
 
     return () => unsubscribe();
-  });
+  },[]);
 
   return (
     <>

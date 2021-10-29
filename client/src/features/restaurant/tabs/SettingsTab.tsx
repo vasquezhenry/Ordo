@@ -4,15 +4,15 @@ import { API } from "../../../app/api";
 import { Restaurant } from "../../../app/types";
 
 interface SettingsProps {
-  pageInfo: Restaurant;
+  pageInfo: Restaurant | undefined;
 }
 
 export default function SettingsTab(props: SettingsProps) {
 
-  const [settings, setSettings] = React.useState<Restaurant>(props.pageInfo);
+  const [settings, setSettings] = React.useState<Restaurant>(props.pageInfo!);
 
   const onSettingsSubmit = async() => {
-    await API.Restaurants.updateRestaurant(props.pageInfo.id, settings);
+    await API.Restaurants.updateRestaurant(props.pageInfo!.id, settings);
   }
 
   const handleSettingsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,7 +56,7 @@ export default function SettingsTab(props: SettingsProps) {
             required
             id="name"
             label="Restaurant Name"
-            defaultValue={props.pageInfo.name}
+            defaultValue={props.pageInfo?.name || ''}
             onChange={handleSettingsChange}
           />
         </p>
@@ -68,28 +68,28 @@ export default function SettingsTab(props: SettingsProps) {
             id="address1"
             required
             label="Address"
-            defaultValue={props.pageInfo.addresses[0].address1}
+            defaultValue={props.pageInfo?.addresses[0].address1 || ''}
           />
         </p>
         <p>
           <TextField
             id="address2"
             label="Address 2"
-            defaultValue={(props.pageInfo.addresses[0].address2) ? (props.pageInfo.addresses[0].address2) : ('')}
+            defaultValue={(props.pageInfo?.addresses[0].address2) ? (props.pageInfo.addresses[0].address2) : ('')}
           />
         </p>
         <p>
           <TextField
             id="address3"
             label="Address 3"
-            defaultValue={(props.pageInfo.addresses[0].address3) ? (props.pageInfo.addresses[0].address3) : ('')}
+            defaultValue={(props.pageInfo?.addresses[0].address3) ? (props.pageInfo.addresses[0].address3) : ('')}
           />
         </p>
         <p>
           <TextField
             id="address4"
             label="Address 4"
-            defaultValue={(props.pageInfo.addresses[0].address4) ? (props.pageInfo.addresses[0].address4) : ('')}
+            defaultValue={(props.pageInfo?.addresses[0].address4) ? (props.pageInfo.addresses[0].address4) : ('')}
 
           />
         </p>
@@ -97,21 +97,21 @@ export default function SettingsTab(props: SettingsProps) {
           <TextField
             id="city"
             label="City"
-            defaultValue={props.pageInfo.addresses[0].city}
+            defaultValue={props.pageInfo?.addresses[0].city}
           />
         </p>
         <p>
           <TextField
             id="state"
             label="State"
-            defaultValue={props.pageInfo.addresses[0].state}
+            defaultValue={props.pageInfo?.addresses[0].state}
           />
         </p>
         <p>
           <TextField
             id="zip"
             label="Zip Code"
-            defaultValue={props.pageInfo.addresses[0].postalCode}
+            defaultValue={props.pageInfo?.addresses[0].postalCode}
           />
         </p>
         <Typography variant="h5" align='left' >
@@ -121,7 +121,7 @@ export default function SettingsTab(props: SettingsProps) {
           <TextField
             id="phone"
             label="Phone Number"
-            defaultValue={props.pageInfo.addresses[0].phoneNumber}
+            defaultValue={props.pageInfo?.addresses[0].phoneNumber}
           />
         </p>
       </div>

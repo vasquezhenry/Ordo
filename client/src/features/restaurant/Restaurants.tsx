@@ -8,19 +8,33 @@ interface RestaurantPorps {
 }
 
 export default function Restaurants({restaurants}: RestaurantPorps) {
-  const [visible, setVisible] = React.useState(true);
-  const [restaurant, setRestaurant] = React.useState<NonNullable<Restaurant>>();
+  const [restaurant, setRestaurant] = React.useState<Restaurant>({
+    id: '',
+    name: '',
+    type: '',
+    ownerId: '',
+    description: '',
+    menuId: '',
+    addresses: []
+  });
   const handleBackButton = () => {
-    setVisible(!visible);
+    setRestaurant({
+      id: '',
+      name: '',
+      type: '',
+      ownerId: '',
+      description: '',
+      menuId: '',
+      addresses: []
+    });
   }
   const handleViewClick = (r: Restaurant) => {
     setRestaurant(r);
-    setVisible(false)
   }
   return(
-    <div>
-      { visible ? (
-        <>
+    <div key="restuarant">
+    {restaurant?.id === '' ? (
+        <div key="restuarants">
           My Restaurant
           {restaurants.map((r) => (
             <Card>
@@ -31,10 +45,11 @@ export default function Restaurants({restaurants}: RestaurantPorps) {
               <h6>{r.addresses[0].address1}</h6>
             </Card>
           ))}
-        </>
-      ) : (
-        restaurant !== undefined ? (<RestaurantMainPage pageInfo={restaurant} handleBackButton={handleBackButton} />) : (<> Error </>)
-      )}
+        </div>
+        )
+        :
+       (<RestaurantMainPage pageInfo={restaurant} handleBackButton={handleBackButton}/>)
+    }
     </div>
   )
 }

@@ -1,56 +1,75 @@
-import { Box, Button, Typography, Tab } from "@mui/material";
-import TabContext from '@mui/lab/TabContext';
-import TabList from '@mui/lab/TabList';
-import TabPanel from '@mui/lab/TabPanel';
+import { Box, Button, Typography, Tab, Tabs } from "@mui/material";
 import React from "react";
 import SettingsTab from "./tabs/SettingsTab";
 import MenuTable from "./tabs/MainTable";
-import { Category, Restaurant } from "../../app/types";
-import { API } from "../../app/api";
+import { Restaurant } from "../../app/types";
+
 
 interface MainPageProps {
-  pageInfo: Restaurant;
+  pageInfo: Restaurant | undefined;
   handleBackButton: () => void;
 }
 
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+}
+
+function TabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+function a11yProps(index: number) {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  };
+}
+
+
 export default function UserPage({pageInfo, handleBackButton}: MainPageProps){
-  const [value, setValue] = React.useState('1');
-  const [catigories, setCatigories] = React.useState<Category[]>([])
-  async function getMenuCategories(id: string) {
-    try {
-      const { data } = await API.Categories.getCategories(id);
-      setCatigories(data);
-    } catch(error) {
-      console.log(error)
-    }
-  }
-  const handleChange = ( eventHandler: React.SyntheticEvent, newValue: string) => {
+  const [value, setValue] = React.useState(0);
+  const handleChange = ( eventHandler: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
-  getMenuCategories(pageInfo.menuId);
   return (
     <> 
       <Typography variant="h2" align='center' >
-        {pageInfo.name}
+        {pageInfo?.name}
       </Typography>
       <Button variant='contained' style={ { float: 'right', marginLeft: '5px' } } onClick={handleBackButton}>
         Back
       </Button>
       <Box sx={{ width: '75%', typography: 'body1' }}>
-      <TabContext value={value}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <TabList onChange={handleChange} aria-label="lab API tabs example">
-            <Tab label="Main Menu" value="1" />
-            <Tab label="Settings" value="2" />
-          </TabList>
+          <Tabs value={value} onChange={handleChange} aria-label="lab API tabs example">
+            <Tab label="Main Menu" {...a11yProps(0)} />
+            <Tab label="Settings" {...a11yProps(1)}/>
+          </Tabs>
         </Box>
-        <TabPanel value="1">
-          <MenuTable menuData={catigories} menuId={pageInfo.menuId}/>
+        <TabPanel value={value} index={0}>
+          <MenuTable menuId={pageInfo?.menuId || ''}/>
         </TabPanel>
-        <TabPanel value="2">
+        <TabPanel value={value} index={1}>
           <SettingsTab pageInfo={pageInfo}/>
         </TabPanel>
-      </TabContext>
     </Box>
     </>
   )

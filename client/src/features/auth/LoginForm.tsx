@@ -1,3 +1,4 @@
+import React from "react";
 import { useForm } from 'react-hook-form';
 import { useAppDispatch } from '../../app/hooks';
 import { signIn } from './authSlice';
@@ -5,7 +6,7 @@ import { signIn } from './authSlice';
 interface Input {
   email: string;
 }
-function LoginForm() {
+export default function LoginForm() {
   const { handleSubmit, register, setError } = useForm<Input>();
   const dispatch = useAppDispatch();
   const onSubmit = async (data: Input) => {
@@ -28,5 +29,3 @@ function LoginForm() {
     </form>
   );
 }
-
-export default LoginForm;

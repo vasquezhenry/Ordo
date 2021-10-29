@@ -1,16 +1,13 @@
-import { Box, Modal, TextField, Typography, Button } from "@mui/material";
+import { Box, Button, TextField, Typography } from "@mui/material";
 import React from "react";
-import { API } from "../../../app/api";
 import { CreateCategoryDto } from "../../../app/types";
 
 interface CreateCategoryProps {
-  menuId: string;
-  visible: boolean
-  onCancel: () => void;
-  getCategories: () => void;
+  handleSubmit: (info: CreateCategoryDto) => void;
+  handleClose: () => void;
 }
 
-export default function CreateCategory({onCancel, menuId, getCategories, visible}: CreateCategoryProps) {
+export default function CreateCategory({ handleSubmit, handleClose }: CreateCategoryProps) {
 
   const [categoryInfo, setCategoryInfo] = React.useState<CreateCategoryDto>({
     name: '',
@@ -21,24 +18,14 @@ export default function CreateCategory({onCancel, menuId, getCategories, visible
     const newInfo = categoryInfo;
     if(event.target.id === "name") {
       newInfo.name = event.target.value;
-    } else {
+    } else if (event.target.id === "discription") {
       newInfo.description = event.target.value
     }
     setCategoryInfo(newInfo);
   }
-  const handleSubmit = async() => {
-    try {
-      await API.Categories.createCategory(menuId, categoryInfo);
-      getCategories();
-    } catch (error) {
-      console.log(error);
-    }
-  }
 
   return (
-    <Modal
-      open={visible}
-    >
+    <>
       <Box
         component="form"
         sx={{
@@ -64,19 +51,12 @@ export default function CreateCategory({onCancel, menuId, getCategories, visible
             multiline
             id="discription"
             label="Category Discription"
+            onChange={handleCategoryChange}
           />
         </p>
-        <Button onClick={onCancel} style={{float: "right", marginRight: "5px"}}>
-          Cancel
-        </Button>
-        <Button 
-          onClick={handleSubmit} 
-          style={{float: "right", marginLeft: "5px"}}
-          disabled={categoryInfo!.name && categoryInfo!.description !== '' ? true : false}
-        >
-          Submit
-        </Button>
+        <Button onClick={handleClose}>Cancel</Button>
+        <Button onClick={() => handleSubmit(categoryInfo)} variant="contained" autoFocus>Submit</Button>
       </Box>
-    </Modal>
+    </>
   )
 }

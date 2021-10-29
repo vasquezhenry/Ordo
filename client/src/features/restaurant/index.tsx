@@ -1,16 +1,20 @@
-import { useEffect, useState } from 'react';
+import React from 'react';
 import { API } from '../../app/api';
 import { useAppSelector } from '../../app/hooks';
 import { Restaurant } from '../../app/types';
 import NewRestaurant from './NewRestaurant';
 import Restaurants from './Restaurants';
 
+
 export default function MyRestaurantPage() {
-  const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
+  const [restaurants, setRestaurants] = React.useState<Restaurant[]>([]);
   const currentUser = useAppSelector((s) => s.auth.user);
-  useEffect(() => {
+  React.useEffect(() => {
     getRestaurants();
-  });
+    return () => {
+      setRestaurants([]);
+    }
+  },[]);
 
   async function getRestaurants() {
     try {
