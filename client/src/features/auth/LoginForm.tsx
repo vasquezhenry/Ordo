@@ -1,3 +1,4 @@
+import { Button, TextField } from "@mui/material";
 import React from "react";
 import { useForm } from 'react-hook-form';
 import { useAppDispatch } from '../../app/hooks';
@@ -8,10 +9,14 @@ interface Input {
 }
 export default function LoginForm() {
   const { handleSubmit, register, setError } = useForm<Input>();
+  const [input, setInput ] = React.useState("");
   const dispatch = useAppDispatch();
-  const onSubmit = async (data: Input) => {
+  const handleChange = (event: any)=> {
+    setInput(event.target.value);
+  }
+  const onSubmit = async (value: string) => {
     try {
-      await dispatch(signIn(data.email)).unwrap();
+      await dispatch(signIn(value)).unwrap();
       alert('Check email to complete login!');
     } catch (error) {
       console.log(error);
@@ -22,10 +27,10 @@ export default function LoginForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <>
       Email:
-      <input {...register('email')} />
-      <button type="submit">Submit</button>
-    </form>
+      <TextField margin="normal" onChange={handleChange}/>
+      <Button variant="contained" onClick={() => onSubmit(input)} type="submit">Submit</Button>
+    </>
   );
 }
