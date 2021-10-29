@@ -3,16 +3,15 @@ import { Toaster } from 'react-hot-toast';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { JWT_KEY } from './app/api';
 import { useAppDispatch } from './app/hooks';
-import { setLoading, setUser, signOut } from './features/auth/authSlice';
+import { setLoading, setUser } from './features/auth/authSlice';
 import ConfirmForm from './features/auth/ConfirmForm';
 import LoginForm from './features/auth/LoginForm';
 import MyRestaurantPage from './features/restaurant';
-import Restaurant from './features/restaurant';
-import NewRestaurant from './features/restaurant/NewRestaurant';
 import OwnerLayout from './layouts/owner-layout';
 import GuestRoute from './routes/GuestRoute';
 import PrivateRoute from './routes/PrivateRoute';
 import { auth } from './services/firebase';
+import React from 'react';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -33,7 +32,7 @@ function App() {
     });
 
     return () => unsubscribe();
-  }, []);
+  },[]);
 
   return (
     <>

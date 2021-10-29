@@ -40,6 +40,10 @@ const Restaurants = {
   async getRestaurants(ownerId: string): Promise<AxiosResponse<Restaurant[]>> {
     return instance.get(`/owners/${ownerId}/restaurants`);
   },
+  //Update existing resturant
+  async updateRestaurant(resturantId: string, r: Restaurant): Promise<AxiosResponse<Restaurant>> {
+    return instance.put(`/restaurants/${resturantId}`, r);
+  }
 };
 const Items = {
   //Create item given a categoryId
@@ -47,7 +51,7 @@ const Items = {
     return instance.post(`/categories/${categoryId}/items`, item);
   },
   //Get all items by categoryId
-  async getItems(categoryId: string): Promise<AxiosResponse<Item>> {
+  async getItems(categoryId: string): Promise<AxiosResponse<Item[]>> {
     return instance.get(`/categories/${categoryId}/items`);
   },
   //Update an item by itemId(NOTE: If you want to "delete" an item just change active to false on the item)
@@ -62,9 +66,13 @@ const Categories = {
     return instance.post(`/menus/${menuId}/categories`, category);
   },
   //Get all categories by a given menuId
-  async getCategories(menuId: string): Promise<AxiosResponse<Category>> {
+  async getCategories(menuId: string): Promise<AxiosResponse<Category[]>> {
     return instance.get(`/menus/${menuId}/categories`);
   },
+  //delete category by id
+  async deleteCategories(id: string): Promise<AxiosResponse> {
+    return instance.delete(`/categories/${id}`)
+  }
 };
 
 export const API = {

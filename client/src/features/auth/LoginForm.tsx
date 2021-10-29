@@ -1,5 +1,5 @@
-import { Button, TextField } from '@mui/material';
-import React from 'react';
+import { Button, TextField } from "@mui/material";
+import React from "react";
 import { useForm } from 'react-hook-form';
 import { useAppDispatch } from '../../app/hooks';
 import { signIn } from './authSlice';
@@ -7,9 +7,9 @@ import { signIn } from './authSlice';
 interface Input {
   email: string;
 }
-function LoginForm() {
-  const [input, setInput ] = React.useState("");
+export default function LoginForm() {
   const { handleSubmit, register, setError } = useForm<Input>();
+  const [input, setInput ] = React.useState("");
   const dispatch = useAppDispatch();
   const handleChange = (event: any)=> {
     setInput(event.target.value);
@@ -34,5 +34,3 @@ function LoginForm() {
     </>
   );
 }
-
-export default LoginForm;

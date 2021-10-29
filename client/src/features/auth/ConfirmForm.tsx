@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory, useLocation } from 'react-router';
 import { useAppDispatch } from '../../app/hooks';
@@ -14,11 +14,11 @@ function ConfirmForm() {
   const location = useLocation();
   const email = localStorage.getItem('emailForSignIn');
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (email) {
       dispatch(confirm({ email: email, code: window.location.href })).then(() => history.push('/'));
     }
-  }, []);
+  });
 
   const onSubmit = async (data: Input) => {
     try {
