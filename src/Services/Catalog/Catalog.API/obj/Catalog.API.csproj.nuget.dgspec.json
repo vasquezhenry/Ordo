@@ -14,7 +14,7 @@
         "outputPath": "/Users/henry/School/SeniorProject/Ordo/src/Services/Catalog/Catalog.API/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/henry/.config/NuGet/NuGet.Config"
+          "/Users/henry/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net5.0"

@@ -22,7 +22,7 @@ namespace Ordo.Services.Catalog.API.Items
         ///<summary>
         ///Creates item
         ///</summary>
-        [HttpPost("categories/{categoryId}/items")]
+        [HttpPost("/categories/{categoryId}/items")]
         public async Task<ActionResult<ItemDto>> CreateItem(Guid categoryId, CreateItemDto itemDto)
         {
             var item = _mapper.Map<Item>(itemDto);
@@ -34,7 +34,7 @@ namespace Ordo.Services.Catalog.API.Items
         ///<summary>
         ///Gets items by category id
         ///</summary>
-        [HttpGet("categories/{categoryId}/items")]
+        [HttpGet("/categories/{categoryId}/items")]
         public async Task<ActionResult<IEnumerable<ItemDto>>> GetItems(Guid categoryId)
         {
             var items = await _itemRepository.GetByCategoryId(categoryId);
