@@ -29,8 +29,8 @@ export default function LoginForm() {
   return (
     <>
       Email:
-      <TextField margin="normal" onChange={handleChange}/>
-      <Button variant="contained" onClick={() => onSubmit(input)} type="submit">Submit</Button>
+      <TextField margin="normal" size="small" onChange={handleChange}/>
+      <Button variant="contained" onClick={() => onSubmit(input)} type="submit">Submit</Button>  
     </>
   );
 }
