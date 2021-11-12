@@ -1,9 +1,6 @@
 import React, { MouseEvent, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
 import { Button, Box, Card, TextField } from "@mui/material"
-import { Restaurant } from "../../app/types"
-import axios from 'axios'
-import { API } from "../../app/api"
 
 function UserPage() {
     
