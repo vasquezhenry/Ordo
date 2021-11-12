@@ -5,7 +5,7 @@ import { Restaurant } from "../../app/types"
 import axios from 'axios'
 import { API } from "../../app/api"
 
-function HomePage() {
+function UserPage() {
     
   const handleSubmit = () => {
     alert("You have clicked submit");
@@ -29,4 +29,4 @@ function HomePage() {
 }
 
 
-export default HomePage;
+export default UserPage;

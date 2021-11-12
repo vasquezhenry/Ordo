@@ -7,7 +7,7 @@ import { setLoading, setUser } from './features/auth/authSlice';
 import ConfirmForm from './features/auth/ConfirmForm';
 import LoginForm from './features/auth/LoginForm';
 import MyRestaurantPage from './features/restaurant';
-import HomePage from './features/Home Page/HomePage';
+import UserPage from './features/UserPage/HomePage';
 import OwnerLayout from './layouts/owner-layout';
 import GuestRoute from './routes/GuestRoute';
 import PrivateRoute from './routes/PrivateRoute';
@@ -51,7 +51,7 @@ function App() {
             <ConfirmForm />
           </GuestRoute>
           <GuestRoute path="/home">
-            <HomePage />
+            <UserPage />
           </GuestRoute>
           <Route>
             <h1>404 page not found!</h1>
