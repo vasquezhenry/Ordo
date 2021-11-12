@@ -7,7 +7,7 @@ import { setLoading, setUser } from './features/auth/authSlice';
 import ConfirmForm from './features/auth/ConfirmForm';
 import LoginForm from './features/auth/LoginForm';
 import MyRestaurantPage from './features/restaurant';
-import UserPage from './features/UserPage/HomePage';
+import UserPage from './features/UserPage/UserPage';
 import OwnerLayout from './layouts/owner-layout';
 import GuestRoute from './routes/GuestRoute';
 import PrivateRoute from './routes/PrivateRoute';
