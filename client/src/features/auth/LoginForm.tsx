@@ -27,10 +27,16 @@ export default function LoginForm() {
   };
 
   return (
-    <>
-      Email:
-      <TextField margin="normal" size="small" onChange={handleChange}/>
-      <Button variant="contained" onClick={() => onSubmit(input)} type="submit">Submit</Button>  
-    </>
+    <div>
+      <TextField
+        required
+        id="outlined-required"
+        label="Required"
+        size="small"
+        placeholder="Enter Your Email"
+        onChange={handleChange}
+      />
+      <Button size='large' variant="contained" onClick={() => onSubmit(input)} type="submit">Submit</Button>  
+    </div>
   );
 }
