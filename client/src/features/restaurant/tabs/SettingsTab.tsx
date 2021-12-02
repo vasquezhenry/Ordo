@@ -1,43 +1,39 @@
-import { Box, TextField, Typography, Button } from "@mui/material";
+import { Box, TextField, Button, Grid } from "@mui/material";
 import React from "react";
+import { useForm } from "react-hook-form";
 import { API } from "../../../app/api";
-import { Restaurant } from "../../../app/types";
+import { Restaurant, RestaurantAddressDto } from "../../../app/types";
 
 interface SettingsProps {
   pageInfo: Restaurant | undefined;
 }
+interface Input {
+  type: string;
+  description: string;
+  name: string;
+  addresses: RestaurantAddressDto;
+}
 
 export default function SettingsTab(props: SettingsProps) {
-
-  const [settings, setSettings] = React.useState<Restaurant>(props.pageInfo!);
-
-  const onSettingsSubmit = async() => {
-    await API.Restaurants.updateRestaurant(props.pageInfo!.id, settings);
-  }
-
-  const handleSettingsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newSettings = settings;
-    if(event.target.id === "name") {
-      newSettings.name = event.target.value;
-    } else if (event.target.id === "address1") {
-      newSettings.addresses[0].address1 = event.target.value;
-    } else if (event.target.id === "address2") {
-      newSettings.addresses[0].address2 = event.target.value;
-    } else if (event.target.id === "address3") {
-      newSettings.addresses[0].address3 = event.target.value;
-    } else if (event.target.id === "address4") {
-      newSettings.addresses[0].address4 = event.target.value;
-    } else if (event.target.id === "city") {
-      newSettings.addresses[0].city = event.target.value;
-    } else if (event.target.id === "state") {
-      newSettings.addresses[0].state = event.target.value;
-    } else if (event.target.id === "zip") {
-      newSettings.addresses[0].postalCode = event.target.value;
-    } else if (event.target.id === "phone") {
-      newSettings.addresses[0].phoneNumber = event.target.value;
+  const { handleSubmit, register } = useForm<Input>();
+  console.log(props.pageInfo);
+  const onSettingsSubmit = async (data: Input) => {
+    console.log(data);
+    try{
+      await API.Restaurants.updateRestaurant(props.pageInfo!.id, {
+        ...data, addresses: [data.addresses],
+        id: props.pageInfo!.id,
+        ownerId: props.pageInfo!.ownerId,
+        menuId: props.pageInfo!.menuId
+      });
+    }  catch (err) {
+      console.log(err);
     }
-    setSettings(newSettings);
   }
+
+  const onSubmit = () => {
+  }
+
   return(
     <Box
     component="form"
@@ -47,87 +43,106 @@ export default function SettingsTab(props: SettingsProps) {
     noValidate
     autoComplete="off"
   >
-    <div>
-        <Typography variant="h5" align='left' >
-          Set Restaurant Name:
-        </Typography>
-        <p>
-          <TextField
-            required
-            id="name"
-            label="Restaurant Name"
-            defaultValue={props.pageInfo?.name || ''}
-            onChange={handleSettingsChange}
-          />
-        </p>
-        <Typography variant="h5" align='left' >
-          Set Address:
-        </Typography>
-        <p>
-          <TextField
-            id="address1"
-            required
-            label="Address"
-            defaultValue={props.pageInfo?.addresses[0].address1 || ''}
-          />
-        </p>
-        <p>
-          <TextField
-            id="address2"
-            label="Address 2"
-            defaultValue={(props.pageInfo?.addresses[0].address2) ? (props.pageInfo.addresses[0].address2) : ('')}
-          />
-        </p>
-        <p>
-          <TextField
-            id="address3"
-            label="Address 3"
-            defaultValue={(props.pageInfo?.addresses[0].address3) ? (props.pageInfo.addresses[0].address3) : ('')}
-          />
-        </p>
-        <p>
-          <TextField
-            id="address4"
-            label="Address 4"
-            defaultValue={(props.pageInfo?.addresses[0].address4) ? (props.pageInfo.addresses[0].address4) : ('')}
+    <form style={{ textAlign: 'center' }}>
+        <Grid container style={{flexDirection: 'column'}}>
+          <h3>Restaurant Info</h3>
+          <Grid item xs={12}>
+            <TextField 
+              {...register('name')} 
+              label="Name" 
+              fullWidth 
+              defaultValue={props.pageInfo!.name}
+              />
+          </Grid>
+          <Grid item xs={12} style={{ marginTop: '20px' }}>
+            <TextField
+              {...register('type')}
+              label="Type"
+              defaultValue={props.pageInfo!.type}
+              style={{ width: '47%', marginRight: '20px' }}
+            />
 
-          />
-        </p>
-        <p>
-          <TextField
-            id="city"
-            label="City"
-            defaultValue={props.pageInfo?.addresses[0].city}
-          />
-        </p>
-        <p>
-          <TextField
-            id="state"
-            label="State"
-            defaultValue={props.pageInfo?.addresses[0].state}
-          />
-        </p>
-        <p>
-          <TextField
-            id="zip"
-            label="Zip Code"
-            defaultValue={props.pageInfo?.addresses[0].postalCode}
-          />
-        </p>
-        <Typography variant="h5" align='left' >
-          Set Phone Number
-        </Typography>
-        <p>
-          <TextField
-            id="phone"
-            label="Phone Number"
-            defaultValue={props.pageInfo?.addresses[0].phoneNumber}
-          />
-        </p>
-      </div>
-      <Button variant='contained' style={{float: "left"}} onClick={onSettingsSubmit} >
-        Submit Edit
-      </Button>
+            <TextField
+              {...register('description')}
+              label="Description"
+              defaultValue={props.pageInfo?.description}
+              style={{ width: '47%' }}
+            />
+          </Grid>
+
+          <h3>Address Info</h3>
+          <Grid item xs={12} style={{ marginBottom: '10px' }}>
+            <TextField 
+              {...register('addresses.address1')}  
+              label="Address 1"  
+              defaultValue={props.pageInfo?.addresses[0].address1}
+              fullWidth 
+              />
+          </Grid>
+          <Grid item xs={12} style={{ marginBottom: '10px' }}>
+            <TextField 
+              {...register('addresses.address2')} 
+              label="Address 2" 
+              defaultValue={props.pageInfo?.addresses[0].address2}
+              fullWidth 
+            />
+          </Grid>
+          <Grid item xs={12} style={{ marginBottom: '10px' }}>
+            <TextField 
+              {...register('addresses.address3')} 
+              label="Address 3" 
+              defaultValue={props.pageInfo?.addresses[0].address3}
+              fullWidth 
+            />
+          </Grid>
+          <Grid item xs={12} style={{ marginBottom: '10px' }}>
+            <TextField 
+              {...register('addresses.address4')} 
+              label="Address 4" 
+              defaultValue={props.pageInfo?.addresses[0].address4}
+              fullWidth 
+            />
+          </Grid>
+          <Grid item xs={12} style={{ marginTop: '10px' }}>
+            <TextField 
+              {...register('addresses.city')} 
+              label="City" 
+              defaultValue={props.pageInfo?.addresses[0].city}
+              fullWidth 
+            />
+          </Grid>
+          <Grid item xs={12} style={{ marginTop: '20px' }}>
+            <TextField 
+              {...register('addresses.state')} 
+              defaultValue={props.pageInfo?.addresses[0].state}
+              label="State" 
+            />
+            <TextField 
+              {...register('addresses.country')}
+              defaultValue={props.pageInfo?.addresses[0].country}
+              label="Country" 
+            />
+            <TextField 
+              {...register('addresses.postalCode')}
+              defaultValue={props.pageInfo?.addresses[0].postalCode}
+              label="Postal Code"
+            />
+          </Grid>
+          <Grid item xs={12} style={{ marginTop: '20px' }}>
+            <TextField 
+              {...register('addresses.phoneNumber')} 
+              label="Phone Number"
+              defaultValue={props.pageInfo?.addresses[0].phoneNumber}
+              fullWidth
+            />
+          </Grid> 
+          <Grid item xs={12} style={{ marginTop: '20px' }}>
+            <Button type="submit" fullWidth variant={'contained'} onClick={handleSubmit(onSettingsSubmit)}>
+              Submit
+            </Button>
+          </Grid>
+        </Grid>
+      </form>
     </Box>
   )
 } 

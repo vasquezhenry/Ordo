@@ -7,8 +7,8 @@ import { useAppSelector } from '../../app/hooks';
 import { RestaurantAddressDto } from '../../app/types';
 
 interface Props {
+  getRestaurants: () => void;
   onSubmit: () => void;
-  getRestaurants: () => void
 }
 interface Input {
   type: string;
@@ -37,7 +37,7 @@ export default function NewRestaurant(props: Props) {
       <h1>Looks like you don't have a restaurant. Create one here!</h1>
       <form onSubmit={handleSubmit(onSubmit)} style={{ textAlign: 'center' }}>
         <Grid container>
-          <h6>Restaurant Info</h6>
+          <h3>Restaurant Info</h3>
           <Grid item xs={12}>
             <TextField {...register('name')} label="Name" fullWidth placeholder="eg Joe's Best Pizza In Town" />
           </Grid>
@@ -57,7 +57,7 @@ export default function NewRestaurant(props: Props) {
             />
           </Grid>
 
-          <h6>Address Info</h6>
+          <h3>Address Info</h3>
           <Grid item xs={12} style={{ marginBottom: '10px' }}>
             <TextField {...register('addresses.address1')} label="Address 1" fullWidth />
           </Grid>
