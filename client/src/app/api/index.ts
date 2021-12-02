@@ -41,8 +41,11 @@ const Restaurants = {
     return instance.get(`/owners/${ownerId}/restaurants`);
   },
   //Update existing resturant
-  async updateRestaurant(resturantId: string, r: Restaurant): Promise<AxiosResponse<Restaurant>> {
-    return instance.put(`/restaurants/${resturantId}`, r);
+  async updateRestaurant(restaurantId: string, r: Restaurant): Promise<AxiosResponse<Restaurant>> {
+    return instance.put(`/restaurants/${restaurantId}`, r);
+  },
+  async deleteRestaurant(restaurantId: string): Promise<AxiosResponse<Restaurant>> {
+    return instance.delete(`/restaurants/${restaurantId}`);
   }
 };
 const Items = {
@@ -58,6 +61,9 @@ const Items = {
   async updateItem(itemId: string, item: UpdateItemDto): Promise<AxiosResponse<Item>> {
     return instance.put(`/items/${itemId}`, item);
   },
+  async deleteItem(itemId: string): Promise<AxiosResponse<Item>> {
+    return instance.delete(`/items/${itemId}`);
+  }
 };
 
 const Categories = {
