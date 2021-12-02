@@ -3,8 +3,8 @@
 version: '3.4'
 
 services:
-  api:
-    image: api
+  catalogapi:
+    image: catalogapi
     build:
       context: .
       dockerfile: ./Dockerfile

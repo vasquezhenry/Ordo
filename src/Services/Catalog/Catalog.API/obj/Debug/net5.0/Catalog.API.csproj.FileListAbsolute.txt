@@ -119,4 +119,3 @@
 /Users/henry/School/SeniorProject/Ordo/src/Services/Catalog/Catalog.API/obj/Debug/net5.0/Catalog.API.pdb
 /Users/henry/School/SeniorProject/Ordo/src/Services/Catalog/Catalog.API/obj/Debug/net5.0/Catalog.API.genruntimeconfig.cache
 /Users/henry/School/SeniorProject/Ordo/src/Services/Catalog/Catalog.API/bin/Debug/net5.0/Catalog.API.xml
-/Users/henry/School/SeniorProject/Ordo/src/Services/Catalog/Catalog.API/obj/Debug/net5.0/Catalog.API.csproj.CopyComplete

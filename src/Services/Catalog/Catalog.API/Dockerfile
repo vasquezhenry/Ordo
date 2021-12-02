@@ -11,16 +11,16 @@ USER appuser
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0-focal AS build
 WORKDIR /src
-COPY ["Api.csproj", "./"]
-RUN dotnet restore "Api.csproj"
+COPY ["Catalog.API.csproj", "./"]
+RUN dotnet restore "Catalog.API.csproj"
 COPY . .
 WORKDIR "/src/."
-RUN dotnet build "Api.csproj" -c Release -o /app/build
+RUN dotnet build "Catalog.API.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Api.csproj" -c Release -o /app/publish
+RUN dotnet publish "Catalog.API.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Api.dll"]
+ENTRYPOINT ["dotnet", "Catalog.API.dll"]
