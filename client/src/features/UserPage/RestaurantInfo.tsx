@@ -23,7 +23,7 @@ export default function RestaurantInfo({restInfo, handleBackButton}: RestaurantP
         </div>
         <div>
           <Box sx={{ border: 1 , margin: '10px'}}>
-            <MenuTab menuId={restInfo.menuId}/>
+            <MenuTab menuId={restInfo?.menuId}/>
             </Box>
         </div>
       </>
