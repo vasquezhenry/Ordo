@@ -12,16 +12,11 @@ export default function MenuTab({menuId}: MenuProps){
   const [categories, setCategories] = React.useState<Category[]>([]);
 
   React.useEffect( () => {
-    async function fetchData() {
-      try {
-        const res = await API.Categories.getCategories(menuId); 
-        setCategories(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    }
-    fetchData();
-  });
+    axios.get(`https://api.ordo.worthless.app/menus/${menuId}/categories`)
+        .then((response) => {
+        setCategories(response.data);
+      })
+    });
     
     
     return(

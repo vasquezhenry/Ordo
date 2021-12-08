@@ -14,12 +14,6 @@ interface SearchProps {
 export default function Results(){
   const [restaurants, setRestaurants] = React.useState<Restaurant[]>([]);
 
-  const handleChange = (searchQuery:string) => {
-    axios.get(`https://api.ordo.worthless.app/restaurants?search=${searchQuery}`)
-    .then((response) => {
-      setRestaurants(response.data);
-      })};
-
   const [restaurant, setRestaurant] = React.useState<Restaurant>({
     id: '',
     name: '',
@@ -46,6 +40,12 @@ export default function Results(){
   const handleViewClick = (r: Restaurant) => {
     setRestaurant(r);
   }
+
+  const handleChange = (searchQuery:string) => {
+    axios.get(`https://api.ordo.worthless.app/restaurants?search=${searchQuery}`)
+    .then((response) => {
+      setRestaurants(response.data);
+      })};
 
   
   return(
