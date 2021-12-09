@@ -1,8 +1,9 @@
-import { Box, Button, Typography, Tab, Tabs } from "@mui/material";
+import { Box, Button, Typography, Tab, Tabs, Skeleton } from "@mui/material";
 import React from "react";
 import SettingsTab from "./tabs/SettingsTab";
 import MenuTable from "./tabs/MainTable";
-import { Restaurant } from "../../app/types";
+import { Category, Restaurant } from "../../app/types";
+import { API } from "../../app/api";
 
 
 interface MainPageProps {
@@ -46,15 +47,58 @@ function a11yProps(index: number) {
 
 export default function UserPage({pageInfo, handleBackButton}: MainPageProps){
   const [value, setValue] = React.useState(0);
+  const [run, setRun] = React.useState(true);
+  const [complete, setComplete] = React.useState(false);
+  const [categories, setCategories] = React.useState<Category[]>([]);
+  const [rest, setRest] = React.useState<Restaurant>({
+    id: '',
+    name: '',
+    type: '',
+    ownerId: '',
+    description: '',
+    menuId: '',
+    addresses: []
+  });
   const handleChange = ( eventHandler: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+  React.useEffect(() => {
+    let current: Restaurant | undefined;
+    async function fetchRestaurant() {
+      try {
+        const { data } = await API.Restaurants.getRestaurants(pageInfo!.ownerId);
+        current = data.find((el) => el.menuId === pageInfo!.menuId);
+      } catch (error) {
+        console.log(error);
+      }
+      setRest(current!);
+      try{
+        const { data } = await API.Categories.getCategories(pageInfo!.menuId);
+        setCategories(data);
+        setComplete(true);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    if(run) {
+      fetchRestaurant();
+      setRun(false);  
+    }
+  },[run]);
+  async function getRestaurant() {
+    setComplete(false);
+    setRun(true);
+  }
   return (
     <> 
       <Typography variant="h2" align='center' >
-        {pageInfo?.name}
+        {rest.name}
       </Typography>
-      <Button variant='contained' style={ { float: 'right', marginLeft: '5px' } } onClick={handleBackButton}>
+      <Button variant='contained' style={ { float: 'right', marginLeft: '5px' } } onClick={() => {
+          handleBackButton();
+          setComplete(false);
+        }
+      }>
         Back
       </Button>
       <Box sx={{ width: '75%', typography: 'body1' }}>
@@ -65,10 +109,26 @@ export default function UserPage({pageInfo, handleBackButton}: MainPageProps){
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
-          <MenuTable menuId={pageInfo?.menuId || ''}/>
+          {complete ? (
+            <MenuTable menuId={rest.menuId || ''} cat={categories}/>
+          ) : (
+            <>
+              <Skeleton />
+              <Skeleton animation="wave" />
+              <Skeleton animation={false} />
+            </>
+          )}
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <SettingsTab pageInfo={pageInfo}/>
+        {complete ? (
+          <SettingsTab onUpdate={() => getRestaurant()} pageInfo={rest} />
+          ) : (
+            <>
+            <Skeleton />
+            <Skeleton animation="wave" />
+            <Skeleton animation={false} />
+          </>
+        )}
         </TabPanel>
     </Box>
     </>

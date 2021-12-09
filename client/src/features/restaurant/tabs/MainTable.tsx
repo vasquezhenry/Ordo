@@ -8,10 +8,11 @@ import MenuItemCard from "./MenuItemCard";
 
 interface MenuTableProps {
  menuId: string;
+ cat: Category[];
 }
 
-export default function MenuTable({menuId}: MenuTableProps) {
-  const [categories, setCategories] = React.useState<Category[]>([]);
+export default function MenuTable({menuId, cat}: MenuTableProps) {
+  const [categories, setCategories] = React.useState<Category[]>(cat);
   const [run, setRun] = React.useState(true);
   const [open, setOpen] = React.useState(false);
   const [itemOpen, setItemOpen] = React.useState("");
