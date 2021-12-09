@@ -6,6 +6,7 @@ import { Restaurant, RestaurantAddressDto } from "../../../app/types";
 
 interface SettingsProps {
   pageInfo: Restaurant | undefined;
+  onUpdate: () => void;
 }
 interface Input {
   type: string;
@@ -26,12 +27,10 @@ export default function SettingsTab(props: SettingsProps) {
         ownerId: props.pageInfo!.ownerId,
         menuId: props.pageInfo!.menuId
       });
+      props.onUpdate();
     }  catch (err) {
       console.log(err);
     }
-  }
-
-  const onSubmit = () => {
   }
 
   return(

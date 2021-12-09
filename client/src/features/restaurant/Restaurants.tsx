@@ -55,6 +55,7 @@ export default function Restaurants(props: RestaurantPorps) {
     }
   };
   const handleBackButton = () => {
+    props.getRestaurants();
     setRestaurant({
       id: '',
       name: '',
@@ -98,91 +99,102 @@ export default function Restaurants(props: RestaurantPorps) {
     <div key="restuarant">
       {createNew ? (
         <div>
-          <Button variant="contained" style={{float: "right"}} onClick={() => setCreateNew(false)}  >
-            Create Restaurant
-          </Button>
           {restaurant?.id === '' ? (
-            <div key="restuarants">
-              <Typography variant="h2" align='left' >
-                My Restaurants
-              </Typography>
-              {props.restaurants.map((r) => (
-                <Card style={{marginTop: "20px"}}>
-                  <Button variant="contained" style={{float: 'right'}} onClick={() => handleViewClick(r)}>View</Button>
-                  <Button
-                   variant="contained" 
-                   style={{float: 'right', marginRight: '5px', marginLeft: '5px'}}
-                   onClick={() => handleDeleteClick(r)}
-                  >
-                    Delete
-                  </Button>
-                  <h1>{r.name}</h1>
-                  <h6>{r.type}</h6>
-                  <h6>{r.description}</h6>
-                  <h6>{r.addresses[0].address1}</h6>
-                </Card>
-              ))}
-            </div>
+            <>
+              <Button variant="contained" style={{float: "right"}} onClick={() => setCreateNew(false)}  >
+              Create Restaurant
+              </Button>
+              <div key="restuarants">
+                <Typography variant="h2" align='left' >
+                  My Restaurants
+                </Typography>
+                {props.restaurants.map((r) => (
+                  <Card style={{marginTop: "20px"}}>
+                    <Button 
+                      variant="contained" 
+                      style={{float: 'right'}} 
+                      onClick={() => handleViewClick(r)}
+                    >
+                      View
+                    </Button>
+                    <Button
+                    variant="contained" 
+                    style={{float: 'right', marginRight: '5px', marginLeft: '5px'}}
+                    onClick={() => handleDeleteClick(r)}
+                    >
+                      Delete
+                    </Button>
+                    <h1>{r.name}</h1>
+                    <h6>{r.type}</h6>
+                    <h6>{r.description}</h6>
+                    <h6>{r.addresses[0].address1}</h6>
+                  </Card>
+                ))}
+              </div>
+            </>
             )
             :
           (<RestaurantMainPage pageInfo={restaurant} handleBackButton={handleBackButton}/>)
         }
       </div>
       ) : (
-        
-        <form onSubmit={handleSubmit(onSubmit)} style={{ textAlign: 'center' }}>
-        <Grid container>
-          <h6>Restaurant Info</h6>
-          <Grid item xs={12}>
-            <TextField {...register('name')} label="Name" fullWidth placeholder="eg Joe's Best Pizza In Town" />
-          </Grid>
-          <Grid item xs={12} style={{ marginTop: '20px' }}>
-            <TextField
-              {...register('type')}
-              label="Type"
-              placeholder="Pizza"
-              style={{ width: '47%', marginRight: '20px' }}
-            />
+        <>
+          <Button variant="contained" onClick={() => setCreateNew(true)} style={{float: 'right'}}>
+            Back
+          </Button>
+          <form onSubmit={handleSubmit(onSubmit)} style={{ textAlign: 'center' }}>
+            <Grid container>
+              <h6>Restaurant Info</h6>
+              <Grid item xs={12}>
+                <TextField {...register('name')} label="Name" fullWidth placeholder="eg Joe's Best Pizza In Town" />
+              </Grid>
+            <Grid item xs={12} style={{ marginTop: '20px' }}>
+              <TextField
+                {...register('type')}
+                label="Type"
+                placeholder="Pizza"
+                style={{ width: '47%', marginRight: '20px' }}
+              />
 
-            <TextField
-              {...register('description')}
-              label="Description"
-              placeholder="We make the best pizza!"
-              style={{ width: '47%' }}
-            />
+              <TextField
+                {...register('description')}
+                label="Description"
+                placeholder="We make the best pizza!"
+                style={{ width: '47%' }}
+              />
+            </Grid>
+            <h6>Address Info</h6>
+            <Grid item xs={12} style={{ marginBottom: '10px' }}>
+              <TextField {...register('addresses.address1')} label="Address 1" fullWidth />
+            </Grid>
+            <Grid item xs={12} style={{ marginBottom: '10px' }}>
+              <TextField {...register('addresses.address2')} label="Address 2" fullWidth />
+            </Grid>
+            <Grid item xs={12} style={{ marginBottom: '10px' }}>
+              <TextField {...register('addresses.address3')} label="Address 3" fullWidth />
+            </Grid>
+            <Grid item xs={12} style={{ marginBottom: '10px' }}>
+              <TextField {...register('addresses.address4')} label="Address 4" fullWidth />
+            </Grid>
+            <Grid item xs={12} style={{ marginTop: '10px' }}>
+              <TextField {...register('addresses.city')} label="City" fullWidth />
+            </Grid>
+            <Grid item xs={12} style={{ marginTop: '20px' }}>
+              <TextField {...register('addresses.state')} label="State" />
+              <TextField {...register('addresses.country')} label="Country" />
+              <TextField {...register('addresses.postalCode')} label="Postal Code" />
+            </Grid>
+            <Grid item xs={12} style={{ marginTop: '20px' }}>
+              <TextField {...register('addresses.phoneNumber')} label="Phone Number" fullWidth />
+            </Grid>
+            <Grid item xs={12} style={{ marginTop: '20px' }}>
+              <Button type="submit" fullWidth variant={'contained'} onClick={props.onSubmit}>
+                Submit
+              </Button>
+            </Grid>
           </Grid>
-
-          <h6>Address Info</h6>
-          <Grid item xs={12} style={{ marginBottom: '10px' }}>
-            <TextField {...register('addresses.address1')} label="Address 1" fullWidth />
-          </Grid>
-          <Grid item xs={12} style={{ marginBottom: '10px' }}>
-            <TextField {...register('addresses.address2')} label="Address 2" fullWidth />
-          </Grid>
-          <Grid item xs={12} style={{ marginBottom: '10px' }}>
-            <TextField {...register('addresses.address3')} label="Address 3" fullWidth />
-          </Grid>
-          <Grid item xs={12} style={{ marginBottom: '10px' }}>
-            <TextField {...register('addresses.address4')} label="Address 4" fullWidth />
-          </Grid>
-          <Grid item xs={12} style={{ marginTop: '10px' }}>
-            <TextField {...register('addresses.city')} label="City" fullWidth />
-          </Grid>
-          <Grid item xs={12} style={{ marginTop: '20px' }}>
-            <TextField {...register('addresses.state')} label="State" />
-            <TextField {...register('addresses.country')} label="Country" />
-            <TextField {...register('addresses.postalCode')} label="Postal Code" />
-          </Grid>
-          <Grid item xs={12} style={{ marginTop: '20px' }}>
-            <TextField {...register('addresses.phoneNumber')} label="Phone Number" fullWidth />
-          </Grid>
-          <Grid item xs={12} style={{ marginTop: '20px' }}>
-            <Button type="submit" fullWidth variant={'contained'} onClick={props.onSubmit}>
-              Submit
-            </Button>
-          </Grid>
-        </Grid>
-      </form>
+        </form>
+      </>
       )}
       <Dialog
         open={deleteDialog}
