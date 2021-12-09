@@ -6,11 +6,6 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import MenuIcon from '@mui/icons-material/Menu';
 
-interface SearchProps {
-  restaurants: Restaurant[];
-  handleChange: (query:string) => void;
-}
-
 export default function Results(){
   const [restaurants, setRestaurants] = React.useState<Restaurant[]>([]);
 
