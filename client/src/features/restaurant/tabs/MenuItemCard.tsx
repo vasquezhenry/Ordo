@@ -21,7 +21,7 @@ export default function MenuItemCard({item, handleRun}: MenuItemProps){
   }
 
   return (
-    <Card sx={{ minWidth: 300, marginTop: 10, marginBottom: 10 }}>
+    <Card sx={{ minWidth: 300, marginTop: 5, marginBottom: 5 }}>
        <CardContent>
          <div style={{marginBottom: 40}}>
           <Button variant="contained" style={{float: 'right'}}>
@@ -41,15 +41,21 @@ export default function MenuItemCard({item, handleRun}: MenuItemProps){
               "No Image"
             )}
           </div>
-        <Typography variant="h5" component="div">
-          {item.name}
-        </Typography>
-        <Typography style={{float: 'right'}} variant="body1" component="div">
-          {item.price}
-        </Typography>
-        <Typography variant="body1" component="div">
-          {item.description}
-        </Typography>
+          <p>
+            <Typography variant="h5" component="div">
+              {item.name}
+            </Typography>
+          </p>
+          <p>
+            <Typography variant="body1" component="div">
+              {item.description}
+            </Typography>
+          </p>
+          <p>
+            <Typography style={{float: 'left', marginTop: '5'}} variant="body1" component="div">
+              {"$"+item.price}
+            </Typography>
+          </p>
        </div>
        </CardContent>
     </Card>
