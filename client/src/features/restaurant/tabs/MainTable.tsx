@@ -58,6 +58,12 @@ export default function MenuTable({menuId, cat}: MenuTableProps) {
     }
     handleRun()
   }
+
+  const handleEdit = (id: string) => {
+    handleDelete(id);
+    handleClickOpen();
+
+  }
   if (categories === []) {
     return <p>Loading Info...</p>
   }
@@ -90,6 +96,7 @@ export default function MenuTable({menuId, cat}: MenuTableProps) {
                 Delete
               </Button>
               <Button onClick={handleItemOpen} style={{float: "right"}} variant="contained">Add Item</Button>
+              <Button onClick={() => handleEdit(category.id)} style={{float: "right"}} variant="contained">Edit</Button>
               <Typography variant="h4" component="div">
                 {category.name}
               </Typography>
