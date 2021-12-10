@@ -12,10 +12,11 @@ export default function CreateItem({categoryId, onSubmit, handleClose}: CreateIt
   const [itemInfo, setItemInfo] = React.useState<CreateItemDto>({
     name: '',
     description: '',
+    imageUrl: '',
     price: 0
   })
 
-  const handleCategoryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleItemChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newInfo = itemInfo;
     if(event.target.id === "name") {
       newInfo.name = event.target.value;
@@ -24,6 +25,8 @@ export default function CreateItem({categoryId, onSubmit, handleClose}: CreateIt
     } else if (event.target.id === "price") {
       const intValue = +event.target.value
       newInfo.price = intValue;
+    } else if (event.target.id === "imageUrl") {
+      newInfo.imageUrl = event.target.value;
     }
     setItemInfo(newInfo);
   }
@@ -38,23 +41,30 @@ export default function CreateItem({categoryId, onSubmit, handleClose}: CreateIt
         autoComplete="off"
       >
         <Typography variant="h5" align='left'>
-          Create Category
+          Create Item
         </Typography>
         <p>
           <TextField
             required
             id="name"
             label="Item Name"
-            onChange={handleCategoryChange}
+            onChange={handleItemChange}
           />
         </p>
         <p>
           <TextField
-            required
             multiline
             id="discription"
             label="Item Discription"
-            onChange={handleCategoryChange}
+            onChange={handleItemChange}
+          />
+        </p>
+        <p>
+          <TextField
+            multiline
+            id="imageUrl"
+            label="Add a Image with URL"
+            onChange={handleItemChange}
           />
         </p>
         <p>
@@ -63,7 +73,7 @@ export default function CreateItem({categoryId, onSubmit, handleClose}: CreateIt
             multiline
             id="price"
             label="Price"
-            onChange={handleCategoryChange}
+            onChange={handleItemChange}
           />
         </p>
         <Button onClick={handleClose}>Cancel</Button>
