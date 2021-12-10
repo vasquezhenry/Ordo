@@ -60,8 +60,9 @@ export default function MenuTable({menuId, cat}: MenuTableProps) {
   }
 
   const handleEdit = (id: string) => {
-    handleDelete(id);
+    
     handleClickOpen();
+    handleDelete(id);
 
   }
   if (categories === []) {
