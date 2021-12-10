@@ -1,36 +1,46 @@
 import React from 'react';
 import axios from 'axios'
-import { Restaurant, Menu, Category } from '../../../app/types';
-import { API } from "../../../app/api";
+import { Menu } from '../../../app/types';
+import { Box, Card } from '@mui/material'
 
 interface MenuProps {
-    menuId: string;
+    restId: string;
   }
 
-export default function MenuTab({menuId}: MenuProps){
+export default function MenuTab({restId}: MenuProps){
 
-  const [categories, setCategories] = React.useState<Category[]>([]);
+  const [menu, setMenu] = React.useState<Menu>();
 
   React.useEffect( () => {
-    axios.get(`https://api.ordo.worthless.app/menus/${menuId}/categories`)
+    axios.get(`https://api.ordo.worthless.app/restaurants/${restId}/menus`)
         .then((response) => {
-        setCategories(response.data);
+        setMenu(response.data);
       })
-    });
-    
+    },[]);
     
     return(
-        <div key = "category">
-          {categories.map((c) => (
-              <div>
-                <h1> {c.name}</h1>
-                {c.items.map((i) => (
-                  <h5>{i.name}</h5>
+        <>
+            {menu?.categories === undefined ? ( <a> Loading....</a>) : (
+              <>
+              {menu?.categories.map((c) => (
+                  <div>
+                    <Box sx={{ border: 1 , margin: '10px'}}>
+                      <Card sx={{ border: 1 , margin: '10px'}}>
+                        <h2> {c.name}</h2>
+                        {c.items.map((i) => (
+                          <>  
+                            <h5>{i.name}</h5>
+                            <h5>{i.price}</h5>
+                            <h5>{i.description}</h5>
+                            <img src={i.imageUrl} alt={i.name}></img>
+                          </>
+                        ))}
+                      </Card>
+                    </Box>
+                  </div>
                 ))}
-              </div>
-            ))}
-
-        </div>
+                </>
+              )}
+        </>
     );
-
 }

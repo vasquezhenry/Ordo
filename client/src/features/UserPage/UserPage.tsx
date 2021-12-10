@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Restaurant } from '../../app/types';
-import { AppBar, Box, Button, Card, IconButton, TextField, Toolbar, Typography } from "@mui/material"
+import { AppBar, Box, Button, Card, IconButton, TextField, Toolbar } from "@mui/material"
 import RestaurantInfo from './RestaurantInfo';
 import { Link } from 'react-router-dom'
 import axios from 'axios'
@@ -37,10 +37,12 @@ export default function Results(){
   }
 
   const handleChange = (searchQuery:string) => {
-    axios.get(`https://api.ordo.worthless.app/restaurants?search=${searchQuery}`)
-    .then((response) => {
+    console.log(searchQuery);
+      axios.get(`https://api.ordo.worthless.app/restaurants?search=${searchQuery}`)
+      .then((response) => {
       setRestaurants(response.data);
-      })};
+      })
+    };
 
   
   return(
@@ -83,15 +85,13 @@ export default function Results(){
               >
                 <MenuIcon />
               </IconButton>
-              <Button color="inherit" component={Link} to="/login">Login</Button>
+              <Button color="inherit" style={{ float: 'right' }} component={Link} to="/login">Login</Button>
             </Toolbar>
           </AppBar>
         <RestaurantInfo restInfo={restaurant} handleBackButton={handleBackButton}/>
-        </>)
-          }
+        </>)}
     </div>
     </>
     )
-
 
 }

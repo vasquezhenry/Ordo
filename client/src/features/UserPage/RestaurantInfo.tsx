@@ -1,7 +1,5 @@
-import React from 'react'
-import { AppBar, Box, Button, Card, IconButton, TextField, Toolbar, Typography } from "@mui/material"
-import { Restaurant, Menu } from '../../app/types';
-import axios from 'axios'
+import { Box, Button, Typography } from "@mui/material"
+import { Restaurant } from '../../app/types';
 import MenuTab from './Tabs/MenuTab'
 
 
@@ -23,8 +21,9 @@ export default function RestaurantInfo({restInfo, handleBackButton}: RestaurantP
         </div>
         <div>
           <Box sx={{ border: 1 , margin: '10px'}}>
-            <MenuTab menuId={restInfo?.menuId}/>
-            </Box>
+            <h1>Menu</h1>
+            <MenuTab restId={restInfo?.id}/>
+          </Box>
         </div>
       </>
     )
