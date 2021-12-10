@@ -27,13 +27,15 @@ export default function LoginForm() {
   };
 
   return (
+
+    
     <div>
       <TextField
         required
         id="outlined-required"
         label="Required"
         size="small"
-        placeholder="Enter Your Email"
+        placeholder="Enter Your Email for first time users"
         onChange={handleChange}
       />
       <Button size='large' variant="contained" onClick={() => onSubmit(input)} type="submit">Submit</Button>  
