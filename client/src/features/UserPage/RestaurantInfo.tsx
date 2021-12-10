@@ -1,6 +1,7 @@
-import { Box, Button, Typography } from "@mui/material"
+import { Box, Button, Typography } from "@mui/material";
+import React from 'react';
 import { Restaurant } from '../../app/types';
-import MenuTab from './Tabs/MenuTab'
+import MenuTab from './Tabs/MenuTab';
 
 
 interface RestaurantProps {

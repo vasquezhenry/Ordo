@@ -30,6 +30,11 @@ export default function LoginForm() {
 
     
     <div>
+      <p>
+        {'First Time User? '}
+        {'Thats OK! JUust type in your email and then go to your email.'}
+      </p>
+      <p>
       <TextField
         required
         id="outlined-required"
@@ -38,7 +43,8 @@ export default function LoginForm() {
         placeholder="Enter Your Email for first time users"
         onChange={handleChange}
       />
-      <Button size='large' variant="contained" onClick={() => onSubmit(input)} type="submit">Submit</Button>  
+      <Button size='large' variant="contained" onClick={() => onSubmit(input)} type="submit">Submit</Button> 
+      </p> 
     </div>
   );
 }
